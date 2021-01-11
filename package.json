@@ -1,10 +1,14 @@
 {
   "name": "vue-family-tree",
-  "version": "0.1.0",
+  "homepage": "https://github.com/walkerz88/vue-family-tree",
   "private": true,
+  "main": "./lib/vue-family-tree.common.js",
+  "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "predeploy": "vue-cli-service build --mode demo",
+    "deploy": "gh-pages -d demo",
+    "build": "vue-cli-service build --target lib --name vue-family-tree src/lib.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -18,6 +22,9 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "gh-pages": "^3.1.0",
+    "sass": "^1.32.2",
+    "sass-loader": "^10.1.1",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

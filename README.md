@@ -1,24 +1,23 @@
-# vue-family-tree
+Vue component based on HTML and CSS to display family tree.
 
-## Project setup
+## Installation
+### npm
 ```
-npm install
+npm install vue-family-tree --save
 ```
+## Demo
+https://walkerz88.github.io/vue-family-tree/
+## Usage
+Because of recursion, you should import component globaly into vue.
+```
+import Vue from 'vue'
+import App from './App.vue'
+import VueFamilyTree from './components/VueFamilyTree.vue'
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Vue.component('VueFamilyTree', VueFamilyTree);
 
-### Compiles and minifies for production
-```
-npm run build
-```
+new Vue({
+  render: h => h(App),
+}).$mount('#app')
 
-### Lints and fixes files
 ```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
