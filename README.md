@@ -1,4 +1,4 @@
-Vue component based on HTML and CSS to display family tree.
+Vue component to display family tree.
 
 ## Installation
 ### npm
