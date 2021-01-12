@@ -119,3 +119,16 @@ export default {
 </script>
 
 ```
+### Props
+Prop    | Type | Default | Description
+---     | ---- | ------- | -----------
+tree | Array | [] | JSON of your tree
+enable-drag | Boolean | true | Enable or disable drag
+wrapper-styles | Object | If enable-drag is true: `{position: 'relative', width: '100%', height: '600px'}` else `null` | Wrapper css parameters
+drag-cursor | String | `grabbing` | CSS cursor name when drag is active
+mouse-change-diff | Number | 2 | How many pixels mouse should move, to change cursor and prevent mouse events
+
+### Events
+Event | Description
+--- | ---
+card-click | Click on card (You will receive full data from card object)
