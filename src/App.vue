@@ -25,7 +25,8 @@ export default {
         },
         secondPerson: {
           name: 'Jannet Grem',
-          image: 'https://picsum.photos/300/300?random=2'
+          image: 'https://picsum.photos/300/300?random=2',
+          age: 23
         },
         children: [{
           firstPerson: {

@@ -20,6 +20,7 @@
                 <Card
                   :image="block.firstPerson.image"
                   :name="block.firstPerson.name"
+                  :source="block.firstPerson"
                   @click="$emit('card-click', $event)"
                 />
               </div>
@@ -32,6 +33,7 @@
                 <Card
                   :image="block.secondPerson.image"
                   :name="block.secondPerson.name"
+                  :source="block.secondPerson"
                   @click="$emit('card-click', $event)"
                 />
               </div>

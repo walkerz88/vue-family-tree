@@ -3,14 +3,14 @@
   "homepage": "https://github.com/walkerz88/vue-family-tree",
   "private": false,
   "main": "./lib/vue-family-tree.common.js",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-family-tree src/lib.js",
     "predeploy": "vue-cli-service build --mode demo",
     "deploy": "gh-pages -d demo",
-    "publish": "npm publish",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "fulldeploy": "npm run build && git add . && git commit -m 'autodeploy' && git push && npm run predeploy && npm run deploy && npm publish"
   },
   "dependencies": {
     "core-js": "^3.6.5",

@@ -22,14 +22,12 @@ export default {
   name: 'FamilyCard',
   props: {
     name: String,
-    image: String
+    image: String,
+    source: Object
   },
   methods: {
     click () {
-      this.$emit('click', {
-        name: this.name,
-        image: this.image
-      })
+      this.$emit('click', this.source);
     }
   }
 }
