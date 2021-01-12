@@ -17,12 +17,17 @@
               class="vue-family-tree__person"
             >
               <div class="vue-family-tree__card">
-                <Card
-                  :image="block.firstPerson.image"
-                  :name="block.firstPerson.name"
-                  :source="block.firstPerson"
-                  @click="$emit('card-click', $event)"
-                />
+                <slot
+                  name="card"
+                  :item="block.firstPerson"
+                >
+                  <Card
+                    :image="block.firstPerson.image"
+                    :name="block.firstPerson.name"
+                    :source="block.firstPerson"
+                    @click="$emit('card-click', $event)"
+                  />
+                </slot>
               </div>
             </div>
             <div
@@ -30,12 +35,17 @@
               class="vue-family-tree__person"
             >
               <div class="vue-family-tree__card">
-                <Card
-                  :image="block.secondPerson.image"
-                  :name="block.secondPerson.name"
-                  :source="block.secondPerson"
-                  @click="$emit('card-click', $event)"
-                />
+                <slot
+                  name="card"
+                  :item="block.secondPerson"
+                >
+                  <Card
+                    :image="block.secondPerson.image"
+                    :name="block.secondPerson.name"
+                    :source="block.secondPerson"
+                    @click="$emit('card-click', $event)"
+                  />
+                </slot>
               </div>
             </div>
           </div>
@@ -44,7 +54,14 @@
           v-if="block.children"
           :tree="block.children"
           @card-click="$emit('card-click', $event)"
-        />
+        >
+          <template v-slot:card="{item}">
+            <slot
+              name="card"
+              :item="item"
+            />
+          </template>
+        </VueFamilyTreeBranch>
       </div>
     </div>
   </div>
@@ -159,20 +176,10 @@ export default {
         content: '';
         position: absolute;
         top: 50px;
-        left: 16px;
-        right: 16px;
-        height: 1px;
-        background-color: #ddd;
-      }
-      &:after {
-        content: '';
-        position: absolute;
-        top: 47px;
         left: 50%;
-        width: 6px;
-        height: 6px;
-        margin-left: -3px;
-        border-radius: 50%;
+        margin-left: -16px;
+        height: 1px;
+        width: 32px;
         background-color: #ddd;
       }
       .vue-family-tree__person {
@@ -193,6 +200,16 @@ export default {
               left: 0;
               width: 1px;
               height: calc(100% - 34px);
+              background-color: #ddd;
+            }
+            &:after {
+              content: '';
+              position: absolute;
+              top: 48px;
+              left: -3px;
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
               background-color: #ddd;
             }
           }

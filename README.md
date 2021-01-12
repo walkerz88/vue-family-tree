@@ -119,7 +119,7 @@ export default {
 </script>
 
 ```
-### Props
+## Props
 Prop    | Type | Default | Description
 ---     | ---- | ------- | -----------
 tree | Array | [] | JSON of your tree
@@ -128,7 +128,17 @@ wrapper-styles | Object | If enable-drag is true: `{position: 'relative', width:
 drag-cursor | String | `grabbing` | CSS cursor name when drag is active
 mouse-change-diff | Number | 2 | How many pixels mouse should move, to change cursor and prevent mouse events
 
-### Events
+## Events
 Event | Description
 --- | ---
 card-click | Click on card (You will receive full data from card object)
+## Slots
+### Card
+Your custom card template
+```html
+<VueFamilyTree :tree="tree">
+  <template v-slot:card="{item}">
+    {{ item.name }}
+  </template>
+</VueFamilyTree>
+```

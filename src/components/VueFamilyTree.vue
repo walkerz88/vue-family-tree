@@ -25,7 +25,14 @@
         left: `${position.x}px`
       }"
       @card-click="cardClick"
-    />
+    >
+      <template v-slot:card="{item}">
+        <slot
+          name="card"
+          :item="item"
+        />
+      </template>
+    </VueFamilyTreeBranch>
   </div>
 </template>
 

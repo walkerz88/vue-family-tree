@@ -3,9 +3,10 @@
   "homepage": "https://github.com/walkerz88/vue-family-tree",
   "private": false,
   "main": "./lib/vue-family-tree.common.js",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve ./src/app.js",
+    "serve-demo": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-family-tree src/lib.js",
     "predeploy": "vue-cli-service build --mode demo",
     "deploy": "gh-pages -d demo",
