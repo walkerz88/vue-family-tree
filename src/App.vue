@@ -100,7 +100,15 @@ export default {
           },
           secondPerson: {
             name: 'Dasha'
-          }
+          },
+          children: [{
+            firstPerson: {
+              name: 'Michael'
+            },
+            secondPerson: {
+              name: 'Maria'
+            }
+          }]
         },
         {
           firstPerson: {

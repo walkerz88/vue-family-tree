@@ -107,7 +107,7 @@ export default {
             content: '';
             position: absolute;
             top: 0;
-            left: 82px;
+            left: 50%;
             height: 16px;
             width: 1px;
             background-color: #ddd;
@@ -131,9 +131,8 @@ export default {
             &:after {
               display: none;
             }
-          }
+          }  
           &:first-child:last-child {
-            padding-left: 146px;
             padding-top: 0;
             &:before {
               display: none;
@@ -143,6 +142,9 @@ export default {
             }
           }
           &_couple {
+            &:after {
+              left: calc(50% - 68px);
+            }
             &:first-child {
               &:before {
                 width: calc(50% + 68px);
@@ -152,6 +154,9 @@ export default {
               &:before {
                 width: calc(50% - 68px);
               }
+            }
+            &:first-child:last-child {
+              padding-left: 146px;
             }
           }
         }
@@ -163,7 +168,9 @@ export default {
     }
     &__col {
       position: relative;
-      padding: 0 16px;
+      & + .vue-family-tree__col {
+        padding-left: 16px;
+      }
     }
     &__content {
       display: flex;
@@ -218,7 +225,6 @@ export default {
     }
     &__person {
       position: relative;
-      padding: 0 16px;
       z-index: 10;
     }
   }

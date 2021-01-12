@@ -134,7 +134,8 @@ Event | Description
 card-click | Click on card (You will receive full data from card object)
 ## Slots
 ### Card
-Your custom card template
+Your custom card template.
+Please use fixed width in your card styles (will be fixed in feature)
 ```html
 <VueFamilyTree :tree="tree">
   <template v-slot:card="{item}">
