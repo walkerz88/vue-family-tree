@@ -3,7 +3,6 @@
     <h1 class="title">VueFamilyTree</h1>
     <VueFamilyTree
       :tree="tree"
-      :enable-drag="false"
       @card-click="cardClick"
     />
   </div>
