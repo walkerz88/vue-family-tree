@@ -9,9 +9,12 @@
 </template>
 
 <script>
-
+import VueFamilyTree from './components/VueFamilyTree';
 export default {
   name: 'App',
+  components: {
+    VueFamilyTree
+  },
   data () {
     return {
       tree: [{

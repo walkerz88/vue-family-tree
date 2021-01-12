@@ -1,7 +1,7 @@
 {
   "name": "vue-family-tree",
   "homepage": "https://github.com/walkerz88/vue-family-tree",
-  "private": true,
+  "private": false,
   "main": "./lib/vue-family-tree.common.js",
   "version": "0.1.0",
   "scripts": {

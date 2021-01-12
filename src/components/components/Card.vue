@@ -1,12 +1,12 @@
 <template>
-  <div class="family-card">
+  <div class="vue-family-card">
     <a
       href="#"
       @click.prevent="click"
-      class="family-card__image"
+      class="vue-family-card__image"
       :style="{backgroundImage: image ? `url(${image})` : null}"
     />
-    <div class="family-card__name">
+    <div class="vue-family-card__name">
       <a
         href="#"
         @click.prevent="click"
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .family-card {
+  .vue-family-card {
     text-align: center;
     width: 100px;
     &__image {
