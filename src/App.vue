@@ -9,7 +9,7 @@
     </div>
     <VueFamilyTree
       :tree="tree"
-      @card-click="cardClick"
+      @add-partner="addPartner"
     />
   </div>
 </template>
@@ -24,54 +24,26 @@ export default {
   data () {
     return {
       customCard: false,
+      index: 1,
       tree: [
         {
           id: 1,
           image: 'https://picsum.photos/300/300?random=1',
           name: 'John Walker'
-        },
-        {
-          id: 2,
-          pid: 1,
-          relations_type: 'partners',
-          image: 'https://picsum.photos/300/300?random=2',
-          name: 'Katia Berserk'
-        },
-        {
-          id: 3,
-          pid: 1,
-          relations_type: 'parents',
-          image: 'https://picsum.photos/300/300?random=2',
-          name: 'Maria Volkova'
-        },
-        {
-          id: 4,
-          pid: 1,
-          relations_type: 'parents',
-          image: 'https://picsum.photos/300/300?random=2',
-          name: 'Oleg Walker'
-        },
-        {
-          id: 5,
-          pid: 1,
-          ppid: 2,
-          relations_type: 'childrens',
-          image: 'https://picsum.photos/300/300?random=2',
-          name: 'Valia Gromova'
-        },
-        {
-          id: 6,
-          pid: 2,
-          relations_type: 'parents',
-          image: 'https://picsum.photos/300/300?random=2',
-          name: 'Anna Berserk'
         }
       ]
     }
   },
   methods: {
-    cardClick (item) {
-      console.log(item);
+    addPartner (item) {
+      this.index += 1;
+      this.tree.push({
+        id: this.index,
+        pid: item.id,
+        name: `Партнер ${item.name}`,
+        relations_type: 'partners'
+      });
+      console.log(this.tree)
     }
   }
 }

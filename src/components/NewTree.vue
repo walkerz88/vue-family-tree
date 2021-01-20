@@ -1,28 +1,19 @@
 <template>
   <div class="tree">
-    <pre>{{ familyTree }}</pre>
-    <Card
-      v-for="(item, index) in tree"
-      class="tree__card"
-      :style="{
-        top: item.position ? item.position.top : 0,
-        left: item.position ? item.position.left : 0
-      }"
-      :key="index"
-      :ref="`card_${item.id}`"
-      :image="item.image"
-      :name="item.name"
+    <Branch
+      :item="familyTree"
+      @add-partner="addPartner"
     />
   </div>
 </template>
 
 <script>
-import Card from './components/Card';
+import Branch from './components/NewBranch';
 
 export default {
   name: 'tree',
   components: {
-    Card
+    Branch
   },
   props: {
     tree: {
@@ -73,21 +64,13 @@ export default {
 
         return rels;
       }
-      
+
       return obj;
     }
   },
   methods: {
-    setPosition (item, top = 0, left = 0) {
-        // set position prop for all cards
-        /* array.forEach(item => {
-          this.$set(item, 'position', {
-            top: 0,
-            left: 0
-          });
-        }); */
-      item.position.top = top;
-      item.position.left = left;
+    addPartner (item) {
+      this.$emit('add-partner', item);
     }
   }
 }
