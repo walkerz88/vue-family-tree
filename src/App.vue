@@ -10,35 +10,12 @@
     <VueFamilyTree
       :tree="tree"
       @card-click="cardClick"
-    >
-      <template
-        v-if="customCard"
-        v-slot:card="{item}"
-      >
-        <div class="custom-card">
-          <div
-            :style="{backgroundImage: item.image ? `url(${item.image})` :  null}"
-            class="custom-card__image"
-          />
-          <div class="custom-card__info">
-            <div class="custom-card__name">
-              {{ item.name }}
-            </div>
-            <div
-              v-show="item.age"
-              class="custom-card__age"
-            >
-              Age: {{ item.age }}
-            </div>
-          </div>
-        </div>
-      </template>
-    </VueFamilyTree>
+    />
   </div>
 </template>
 
 <script>
-import VueFamilyTree from './components/VueFamilyTree';
+import VueFamilyTree from './components/NewTree';
 export default {
   name: 'App',
   components: {
@@ -47,94 +24,35 @@ export default {
   data () {
     return {
       customCard: false,
-      tree: [{
-        firstPerson: {
-          name: 'John Walker',
-          image: 'https://picsum.photos/300/300?random=1'
+      tree: [
+        {
+          id: 1,
+          image: 'https://picsum.photos/300/300?random=1',
+          name: 'John Walker'
         },
-        secondPerson: {
-          name: 'Jannet Grem',
+        {
+          id: 2,
+          pid: 1,
+          relations_type: 'partners',
           image: 'https://picsum.photos/300/300?random=2',
-          age: 23
-        },
-        children: [{
-          firstPerson: {
-            name: 'Katia'
-          },
-          secondPerson: {
-            name: 'Oleg'
-          },
-          children: [{
-            firstPerson: {
-              name: 'Gleb'
-            },
-            secondPerson: {
-              name: 'Viktoriya'
-            },
-            children: [{
-              firstPerson: {
-                name: 'Rim'
-              },
-              secondPerson: {
-                name: 'Natasha'
-              }
-            },
-            {
-              firstPerson: {
-                name: 'Leonid'
-              }
-            }]
-          },
-          {
-            firstPerson: {
-              name: 'Olga'
-            },
-            secondPerson: {
-              name: 'Nikita'
-            }
-          }]
+          name: 'Katia Berserk'
         },
         {
-          firstPerson: {
-            name: 'Vitia'
-          },
-          secondPerson: {
-            name: 'Dasha'
-          },
-          children: [{
-            firstPerson: {
-              name: 'Michael'
-            },
-            secondPerson: {
-              name: 'Maria'
-            }
-          }]
+          id: 5,
+          pid: 1,
+          ppid: 2,
+          relations_type: 'childrens',
+          image: 'https://picsum.photos/300/300?random=2',
+          name: 'Valia Gromova'
         },
         {
-          firstPerson: {
-            name: 'Antonio Wild',
-            image: 'https://picsum.photos/300/300?random=3'
-          },
-          secondPerson: {
-            name: 'Olivia Olson'
-          },
-          children: [{
-            firstPerson: {
-              name: 'Kristina Wild'
-            }
-          },
-          {
-            firstPerson: {
-              name: 'Alexey Wild'
-            }
-          },
-          {
-            firstPerson: {
-              name: 'Viktor Wild'
-            }
-          }]
-        }]
-      }]
+          id: 6,
+          pid: 2,
+          relations_type: 'parents',
+          image: 'https://picsum.photos/300/300?random=2',
+          name: 'Anna Berserk'
+        }
+      ]
     }
   },
   methods: {
