@@ -43,28 +43,37 @@ export default {
         const startPerson = array.find(item => !item.parent_id);
         obj = {
           ...startPerson,
-          partners: findRelations(startPerson, 'partners'),
-          siblings: findRelations(startPerson, 'siblings'),
-          parents: findRelations(startPerson, 'parents'),
-          childrens: findRelations(startPerson, 'childrens')
+          ...combineRelations(startPerson)
         };
       }
 
       function findRelations (person, type) {
         let rel = array.filter(item => item.pid === person.id && item.relations_type === type);
+
         rel = rel.map(item => {
           return {
             ...item,
-            partners: findRelations(item, 'partners'),
-            siblings: findRelations(item, 'siblings'),
-            parents: findRelations(item, 'parents'),
-            childrens: findRelations(item, 'childrens')
+          ...combineRelations(item)
           }
-        })
-
+        });
         return rel;
       }
 
+      function combineRelations (item) {
+        let rels = {}
+        const relTypes = ['partners', 'siblings', 'parents', 'childrens'];
+
+        relTypes.forEach(type => {
+          const value = findRelations(item, type);
+
+          if (value && Array.isArray(value) && value.length) {
+            rels[type] = value;
+          }
+        });
+
+        return rels;
+      }
+      
       return obj;
     }
   },

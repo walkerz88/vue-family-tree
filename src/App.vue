@@ -38,6 +38,20 @@ export default {
           name: 'Katia Berserk'
         },
         {
+          id: 3,
+          pid: 1,
+          relations_type: 'parents',
+          image: 'https://picsum.photos/300/300?random=2',
+          name: 'Maria Volkova'
+        },
+        {
+          id: 4,
+          pid: 1,
+          relations_type: 'parents',
+          image: 'https://picsum.photos/300/300?random=2',
+          name: 'Oleg Walker'
+        },
+        {
           id: 5,
           pid: 1,
           ppid: 2,
