@@ -1,21 +1,15 @@
 <template>
   <div id="app">
-    <div class="text-center">
-      <h1 class="title">VueFamilyTree</h1>
-      <label>
-        <input type="checkbox" v-model="customCard">
-        Custom cards
-      </label>
-    </div>
     <VueFamilyTree
       :tree="tree"
-      @add-partner="addPartner"
+      editable
+      @update-tree="updateTree"
     />
   </div>
 </template>
 
 <script>
-import VueFamilyTree from './components/NewTree';
+import VueFamilyTree from './components/VueFamilyTree';
 export default {
   name: 'App',
   components: {
@@ -24,26 +18,27 @@ export default {
   data () {
     return {
       customCard: false,
-      index: 1,
       tree: [
         {
           id: 1,
           image: 'https://picsum.photos/300/300?random=1',
-          name: 'John Walker'
+          name: 'John Walker',
+          dateOfBirth: '10.08.1990'
+        },
+        {
+          id: 2,
+          pid: 1,
+          relations_type: 'partners',
+          image: 'https://picsum.photos/300/300?random=2',
+          name: 'Alicia Wild',
+          dateOfBirth: '11.08.1990'
         }
       ]
     }
   },
   methods: {
-    addPartner (item) {
-      this.index += 1;
-      this.tree.push({
-        id: this.index,
-        pid: item.id,
-        name: `Партнер ${item.name}`,
-        relations_type: 'partners'
-      });
-      console.log(this.tree)
+    updateTree (tree) {
+      this.tree = tree;
     }
   }
 }
@@ -51,11 +46,11 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
 }
 
 .text-center {
