@@ -13,12 +13,16 @@
       </div>
     </div>
     <div class="vue-family-controls__left">
-      <button class="vue-family-controls__button">
-        + Добавить брата
-      </button>
-      <button class="vue-family-controls__button">
-        + Добавить сестру
-      </button>
+      <div class="vue-family-controls__left-item">
+        <button class="vue-family-controls__button">
+          + Добавить брата
+        </button>
+      </div>
+      <div class="vue-family-controls__left-item">
+        <button class="vue-family-controls__button">
+          + Добавить сестру
+        </button>
+      </div>
     </div>
     <div class="vue-family-controls__right">
       <button class="vue-family-controls__button">
@@ -128,18 +132,50 @@ export default {
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translate(calc(-100% - 50px), -50%);
-    > .vue-family-controls__button {
-      & + .vue-family-controls__button {
-        margin-top: 24px;
-      }
+    transform: translate(calc(-100% - 100px), -50%);
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      display: block;
+      width: 50px;
+      height: 50%;
+      border: 2px solid #fff;
+      border-left: none;
+      border-radius: 0 10px 10px 0;
+      transform: translate(0, -50%);
     }
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 50px);
+      display: block;
+      width: 50px;
+      height: 2px;
+      margin-top: -1px;
+      background-color: #fff;
+    }
+  }
+  &__left-item {
+    padding: 12px 0;
   }
   &__right {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translate(calc(100% + 50px), -50%);
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      display: block;
+      width: 50px;
+      height: 2px;
+      background-color: #fff;
+    }
   }
   &__footer {
     display: flex;
