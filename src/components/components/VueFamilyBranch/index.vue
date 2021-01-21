@@ -7,6 +7,7 @@
           :name="item.name"
           :date-of-birth="item.dateOfBirth"
           editable
+          @toggle-controls="$emit('toggle-controls')"
         />
       </div>
       <div class="vue-family-col"
@@ -42,9 +43,6 @@ export default {
     }
   },
   methods: {
-    toggleControls () {
-      this.showControls = !this.showControls;
-    },
     addPartner (item) {
       this.$emit('add-partner', item);
     }

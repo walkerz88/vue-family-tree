@@ -1,49 +1,68 @@
 <template>
   <div class="vue-family-card">
-    <div class="vue-family-card__content">
-      <div
-        v-show="image"
-        :style="{backgroundImage: image ? `url(${image})` : null}"
-        class="vue-family-card__image"
+    <div
+      v-show="editable && controls.active"
+      class="vue-family-card__overlay"
+      @click="toggleControls"
+    />
+    <div
+      class="vue-family-card__content"
+      :style="{zIndex: editable && controls.active ? 200 : null}"
+    >
+      <VueFamilyControls
+        v-show="editable && controls.active"
       />
-      <div class="vue-family-card__info">
+      <div class="vue-family-card__body">
         <div
-          v-show="name"
-          class="vue-family-card__title"
-        >
-          {{ name }}
-        </div>
-        <div
-          v-show="dateOfBirth"
-          class="vue-family-card__caption"
-        >
-          {{ dateOfBirth }}
+          v-show="image"
+          :style="{backgroundImage: image ? `url(${image})` : null}"
+          class="vue-family-card__image"
+        />
+        <div class="vue-family-card__info">
+          <div
+            v-show="name"
+            class="vue-family-card__title"
+          >
+            {{ name }}
+          </div>
+          <div
+            v-show="dateOfBirth"
+            class="vue-family-card__caption"
+          >
+            {{ dateOfBirth }}
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="vue-family-card__footer"
-      v-show="editable"
-    >
-      <button
-        class="vue-family-card__icon"
-        @click.prevent
+      <div
+        class="vue-family-card__footer"
+        v-show="editable"
       >
-        <img src="./edit.svg" alt="edit">
+        <button
+          class="vue-family-card__icon"
+          @click.prevent
+        >
+          <img src="./edit.svg" alt="edit">
+        </button>
+      </div>
+      <button
+        v-show="editable"
+        class="vue-family-card__plus"
+        @click="toggleControls"
+      >
+        +
       </button>
     </div>
-    <button
-      v-show="editable"
-      class="vue-family-card__plus"
-    >
-      +
-    </button>
   </div>
 </template>
 
 <script>
+import VueFamilyControls from './components/VueFamilyControls';
+
 export default {
   name: 'VueFamilyCard',
+  components: {
+    VueFamilyControls
+  },
   props: {
     image: String,
     name: String,
@@ -52,18 +71,40 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  data () {
+    return {
+      controls: {
+        active: false
+      }
+    }
+  },
+  methods: {
+    toggleControls () {
+      this.$emit('toggle-controls');
+      this.controls.active = !this.controls.active;
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .vue-family-card {
-  position: relative;
-  background-color: #FFFFFF;
-  box-shadow: 0px 0px 15px rgba(94, 101, 124, 0.25);
-  border-radius: 5px;
-  padding: 12px;
   &__content {
+    position: relative;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 15px rgba(94, 101, 124, 0.25);
+    border-radius: 5px;
+    padding: 12px;
+    transition: box-shadow .2s ease;
+    box-sizing: border-box;
+    width: 256px;
+    &:hover {
+      box-shadow: 0px 0px 15px rgba(94, 101, 124, 0.5);
+    }
+  }
+  &__body {
+    position: relative;
     display: flex;
     align-items: center;
   }
@@ -89,10 +130,11 @@ export default {
     color: rgba(#000, .7);
   }
   &__footer {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 16px;
+    margin-top: 13px;
   }
   &__icon {
     border: none;
@@ -127,6 +169,7 @@ export default {
     padding: 0;
     border-radius: 50%;
     cursor: pointer;
+    outline: none;
     &:before {
       content: '';
       display: block;
@@ -139,6 +182,16 @@ export default {
       border: 2px solid #fff;
       border-radius: 50%;
     }
+  }
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: #000000;
+    opacity: 0.6;
   }
 }
 </style>

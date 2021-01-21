@@ -1,5 +1,5 @@
 <template>
-  <div class="tree">
+  <div class="vue-family-tree">
     <VueFamilyBranch
       :item="familyTree"
       editable
@@ -75,39 +75,38 @@ export default {
   },
   methods: {
     addPartner (item) {
-      // Find max id in tree
-      const indexes = this.tree.map(item => item.id);
-      const index = Math.max(...indexes) + 1;
-      let tree = this.tree;
+      if (this.editable) {
+        // Find max id in tree
+        const indexes = this.tree.map(item => item.id);
+        const index = Math.max(...indexes) + 1;
+        let tree = this.tree;
 
-      tree.push({
-        id: index,
-        pid: item.id,
-        name: `Партнер ${item.name}`,
-        relations_type: 'partners'
-      });
+        tree.push({
+          id: index,
+          pid: item.id,
+          name: `Партнер ${item.name}`,
+          relations_type: 'partners'
+        });
 
-      this.$emit('add-partner', {
-        item,
-        tree
-      });
+        this.$emit('add-partner', {
+          item,
+          tree
+        });
 
-      this.$emit('update-tree', tree);
+        this.$emit('update-tree', tree);
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.tree {
+.vue-family-tree {
   position: relative;
   width: 100%;
   height: 600px;
-  &__card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
