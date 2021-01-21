@@ -7,6 +7,7 @@
           :name="item.name"
           :date-of-birth="item.dateOfBirth"
           :editable="editable"
+          :preventMouseEvents="preventMouseEvents"
         />
       </div>
       <div class="vue-family-col"
@@ -16,6 +17,7 @@
         <VueFamilyBranch
           :item="partner"
           :editable="editable"
+          :preventMouseEvents="preventMouseEvents"
           @add-partner="$emit('add-partner', $event)"
         />
       </div>
@@ -33,6 +35,10 @@ export default {
   props: {
     item: Object,
     editable: {
+      type: Boolean,
+      default: false
+    },
+    preventMouseEvents: {
       type: Boolean,
       default: false
     }

@@ -70,6 +70,10 @@ export default {
     editable: {
       type: Boolean,
       default: false
+    },
+    preventMouseEvents: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -81,8 +85,10 @@ export default {
   },
   methods: {
     toggleControls () {
-      this.$emit('toggle-controls');
-      this.controls.active = !this.controls.active;
+      if (!this.preventMouseEvents) {
+        this.$emit('toggle-controls');
+        this.controls.active = !this.controls.active;
+      }
     }
   }
 }

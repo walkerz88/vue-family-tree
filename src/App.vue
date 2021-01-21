@@ -2,6 +2,11 @@
   <div id="app">
     <VueFamilyTree
       :tree="tree"
+      :wrapperStyles="{
+        position: 'relative',
+        width: '100%',
+        height: '100%'
+      }"
       editable
       @update-tree="updateTree"
     />
@@ -45,12 +50,19 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  padding: 0;
+  margin: 0;
+}
 #app {
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  padding-top: 60px;
 }
 
 .text-center {
