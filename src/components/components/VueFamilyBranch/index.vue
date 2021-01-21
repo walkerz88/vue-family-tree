@@ -6,8 +6,7 @@
           :image="item.image"
           :name="item.name"
           :date-of-birth="item.dateOfBirth"
-          editable
-          @toggle-controls="$emit('toggle-controls')"
+          :editable="editable"
         />
       </div>
       <div class="vue-family-col"
@@ -16,6 +15,7 @@
       >
         <VueFamilyBranch
           :item="partner"
+          :editable="editable"
           @add-partner="$emit('add-partner', $event)"
         />
       </div>

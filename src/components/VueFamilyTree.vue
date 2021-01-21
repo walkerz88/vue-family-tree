@@ -2,7 +2,7 @@
   <div class="vue-family-tree">
     <VueFamilyBranch
       :item="familyTree"
-      editable
+      :editable="editable"
       @add-partner="addPartner"
     />
   </div>

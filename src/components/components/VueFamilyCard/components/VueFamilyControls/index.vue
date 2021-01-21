@@ -67,6 +67,7 @@ export default {
     color: #fff;
     font-size: 14px;
     font-weight: 600;
+    outline: none;
     cursor: pointer;
     &:hover,
     &:active {
