@@ -1,7 +1,7 @@
 <template>
   <div class="vue-family-branch">
     <div
-      v-if="item.parents && Array.isArray(item.parents) && item.parents.length"
+      v-if="item.parents && Array.isArray(item.parents) && item.parents.length && !item.partner_id"
       class="vue-family-row"
       :style="{
         top: `-${102 + 48}px`,
@@ -32,21 +32,23 @@
           @set-root-person="$emit('set-root-person', $event)"
         />
       </div>
-      <div 
-        v-for="(partner, index) in item.partners"
-        :key="index"
-        :style="{
-          left: `${(256 + 32) * (index + 1)}px`
-        }"
-        class="vue-family-col vue-family-col_partner"
-      >
-        <VueFamilyBranch
-          :item="partner"
-          :editable="editable"
-          :preventMouseEvents="preventMouseEvents"
-          @set-root-person="$emit('set-root-person', $event)"
-        />
-      </div>
+      <template v-if="item.partners && item.partners.length && !item.partner_id">
+        <div
+          v-for="(partner, index) in item.partners"
+          :key="index"
+          :style="{
+            left: `${(256 + 32) * (index + 1)}px`
+          }"
+          class="vue-family-col vue-family-col_partner"
+        >
+          <VueFamilyBranch
+            :item="partner"
+            :editable="editable"
+            :preventMouseEvents="preventMouseEvents"
+            @set-root-person="$emit('set-root-person', $event)"
+          />
+        </div>
+      </template>
     </div>
   </div>
 </template>
