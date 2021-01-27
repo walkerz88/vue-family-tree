@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <VueFamilyTree
+      ref="tree"
       :tree="tree"
       :root-person-id="rootPersonId"
       :wrapperStyles="{
@@ -28,8 +29,8 @@ export default {
       rootPersonId: 1,
       tree: [
         {
-          pid: 3,
           id: 1,
+          pid: 3,
           image: 'https://picsum.photos/300/300?random=1',
           name: 'Jareb Walker',
           dateOfBirth: '09.12.1985'
@@ -61,12 +62,20 @@ export default {
           name: 'Janna Dark',
           dateOfBirth: '11.07.1944'
         },
+        {
+          id: 6,
+          pid: 1,
+          image: 'https://picsum.photos/300/300?random=4',
+          name: 'Antonio Walker',
+          dateOfBirth: '18.02.1994'
+        },
       ]
     }
   },
   methods: {
     setRootPerson (id) {
       this.rootPersonId = id;
+      this.$refs.tree.centerTree();
     },
     updateTree (tree) {
       this.tree = tree;

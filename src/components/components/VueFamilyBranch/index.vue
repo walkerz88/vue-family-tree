@@ -24,11 +24,13 @@
       <div class="vue-family-col">
         <VueFamilyCard
           :id="item.id"
+          :root-person-id="rootPersonId"
           :image="item.image"
           :name="item.name"
           :date-of-birth="item.dateOfBirth"
           :editable="editable"
           :preventMouseEvents="preventMouseEvents"
+          :source="item"
           @set-root-person="$emit('set-root-person', $event)"
         />
       </div>
@@ -50,6 +52,26 @@
         </div>
       </template>
     </div>
+    <div
+      v-if="item.childrens && Array.isArray(item.childrens) && item.childrens.length && !item.partner_id"
+      class="vue-family-row"
+      :style="{
+        top: `${102 + 48}px`,
+        left: `${(256 + 32) * item.childrens.length / 2 }px`
+      }"
+    >
+      <div class="vue-family-col vue-family-col_childrens"
+        v-for="(children, index) in item.childrens"
+        :key="index"
+      >
+        <VueFamilyBranch
+          :item="children"
+          :editable="editable"
+          :preventMouseEvents="preventMouseEvents"
+          @set-root-person="$emit('set-root-person', $event)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,6 +84,7 @@ export default {
   },
   props: {
     item: Object,
+    rootPersonId: Number,
     editable: {
       type: Boolean,
       default: false

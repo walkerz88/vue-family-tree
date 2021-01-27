@@ -9,9 +9,7 @@
       class="vue-family-card__content"
       :style="{zIndex: editable && controls.active ? 200 : null}"
     >
-      <VueFamilyControls
-        v-show="editable && controls.active"
-      />
+      <VueFamilyControls v-show="editable && controls.active"/>
       <div class="vue-family-card__body">
         <div
           v-show="image"
@@ -31,9 +29,6 @@
           >
             {{ dateOfBirth }}
           </div>
-          <button @click.prevent="$emit('set-root-person', id)">
-            root
-          </button>
         </div>
       </div>
       <div
@@ -55,6 +50,13 @@
         +
       </button>
     </div>
+    <button
+      v-show="id !== rootPersonId"
+      class="vue-family-card__root"
+      @click.prevent="$emit('set-root-person', id)"
+    >
+      root
+    </button>
   </div>
 </template>
 
@@ -68,6 +70,7 @@ export default {
   },
   props: {
     id: Number,
+    rootPersonId: Number,
     image: String,
     name: String,
     dateOfBirth: String,
@@ -78,7 +81,8 @@ export default {
     preventMouseEvents: {
       type: Boolean,
       default: false
-    }
+    },
+    source: Object
   },
   data () {
     return {
@@ -100,6 +104,7 @@ export default {
 
 <style lang="scss" scoped>
 .vue-family-card {
+  position: relative;
   &__content {
     position: relative;
     background-color: #FFFFFF;
@@ -138,6 +143,11 @@ export default {
     font-weight: 600;
     font-size: 12px;
     color: rgba(#000, .7);
+  }
+  &__root {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
   &__footer {
     position: relative;

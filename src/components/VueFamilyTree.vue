@@ -21,6 +21,7 @@
     <VueFamilyBranch
       ref="tree"
       :item="familyTree"
+      :root-person-id="rootPersonId"
       :editable="editable"
       :style="{
         position: draggable ? 'absolute' : null,
@@ -119,17 +120,26 @@ export default {
         }
       }
 
-      function findRelations (person) {
+      function findRelations (person, prevPerson) {
         let rel = {};
 
-        let parents = array.filter(item => item.id === person.pid);
+        let parents = [];
+        let childrens = [];
         let partners = array.filter(item => item.partner_id === person.id);
+
+        if (!prevPerson || (person.pid && person.pid !== prevPerson.id)) {
+          parents = array.filter(item => item.id === person.pid);
+        }
+
+        if (!prevPerson || (person.id !== prevPerson.pid)) {
+          childrens = array.filter(item => item.pid === person.id);
+        }
 
         if (parents && parents.length) {
           parents = parents.map(item => {
             return {
               ...item,
-              ...findRelations(item)
+              ...findRelations(item, person)
             }
           });
           rel.parents = parents;
@@ -139,10 +149,20 @@ export default {
           partners = partners.map(item => {
             return {
               ...item,
-              ...findRelations(item)
+              ...findRelations(item, person)
             }
           });
           rel.partners = partners;
+        }
+
+        if (childrens && childrens.length) {
+          childrens = childrens.map(item => {
+            return {
+              ...item,
+              ...findRelations(item, person)
+            }
+          });
+          rel.childrens = childrens;
         }
 
         return rel;
