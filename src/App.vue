@@ -2,6 +2,7 @@
   <div id="app">
     <VueFamilyTree
       :tree="tree"
+      :root-person-id="rootPersonId"
       :wrapperStyles="{
         position: 'relative',
         width: '100%',
@@ -9,6 +10,7 @@
       }"
       editable
       @update-tree="updateTree"
+      @set-root-person="setRootPerson"
     />
   </div>
 </template>
@@ -23,25 +25,49 @@ export default {
   data () {
     return {
       customCard: false,
+      rootPersonId: 1,
       tree: [
         {
+          pid: 3,
           id: 1,
           image: 'https://picsum.photos/300/300?random=1',
-          name: 'John Walker',
-          dateOfBirth: '10.08.1990'
+          name: 'Jareb Walker',
+          dateOfBirth: '09.12.1985'
         },
         {
           id: 2,
-          pid: 1,
-          relations_type: 'partners',
+          partner_id: 1,
           image: 'https://picsum.photos/300/300?random=2',
-          name: 'Alicia Wild',
-          dateOfBirth: '11.08.1990'
-        }
+          name: 'Anna Koska',
+          dateOfBirth: '09.12.1985'
+        },
+        {
+          id: 4,
+          partner_id: 1,
+          image: 'https://picsum.photos/300/300?random=4',
+          name: 'Katia Ruski',
+          dateOfBirth: '09.12.1990'
+        },
+        {
+          id: 3,
+          image: 'https://picsum.photos/300/300?random=3',
+          name: 'Oleg Walker',
+          dateOfBirth: '04.07.1964'
+        },
+        {
+          id: 5,
+          partner_id: 3,
+          image: 'https://picsum.photos/300/300?random=3',
+          name: 'Janna Dark',
+          dateOfBirth: '11.07.1944'
+        },
       ]
     }
   },
   methods: {
+    setRootPerson (id) {
+      this.rootPersonId = id;
+    },
     updateTree (tree) {
       this.tree = tree;
     }

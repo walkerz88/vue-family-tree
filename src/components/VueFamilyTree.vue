@@ -17,6 +17,7 @@
       ...wrapperStyles,
     }"
   >
+    {{ familyTree }}
     <VueFamilyBranch
       ref="tree"
       :item="familyTree"
@@ -27,7 +28,7 @@
         left: `${position.x}px`
       }"
       :prevent-mouse-events="preventMouseEvents"
-      @add-partner="addPartner"
+      @set-root-person="$emit('set-root-person', $event)"
     />
   </div>
 </template>
@@ -47,6 +48,7 @@ export default {
         return []
       }
     },
+    rootPersonId: Number,
     editable: {
       type: Boolean,
       default: false
@@ -98,39 +100,52 @@ export default {
       let array = this.tree;
       if (array && Array.isArray(array) && array.length) {
 
-        // find first person
-        const startPerson = array.find(item => !item.parent_id);
+        // find grand parents person
+        const rootPerson = array.find(item => (item.id === this.rootPersonId));
+
+        if (rootPerson.partner_id) {
+          array = array.map(item => {
+            if (item.id === rootPerson.partner_id) {
+              item.partner_id = rootPerson.id;
+            }
+            return item;
+          });
+          delete rootPerson.partner_id;
+        }
+
         obj = {
-          ...startPerson,
-          ...combineRelations(startPerson)
-        };
+          ...rootPerson,
+          ...findRelations(rootPerson)
+        }
       }
 
-      function findRelations (person, type) {
-        let rel = array.filter(item => item.pid === person.id && item.relations_type === type);
+      function findRelations (person) {
+        let rel = {};
 
-        rel = rel.map(item => {
-          return {
-            ...item,
-          ...combineRelations(item)
-          }
-        });
+        let parents = array.filter(item => item.id === person.pid);
+        let partners = array.filter(item => item.partner_id === person.id);
+
+        if (parents && parents.length) {
+          parents = parents.map(item => {
+            return {
+              ...item,
+              ...findRelations(item)
+            }
+          });
+          rel.parents = parents;
+        }
+
+        if (partners && partners.length) {
+          partners = partners.map(item => {
+            return {
+              ...item,
+              ...findRelations(item)
+            }
+          });
+          rel.partners = partners;
+        }
+
         return rel;
-      }
-
-      function combineRelations (item) {
-        let rels = {}
-        const relTypes = ['partners', 'siblings', 'childrens', 'parents'];
-
-        relTypes.forEach(type => {
-          const value = findRelations(item, type);
-
-          if (value && Array.isArray(value) && value.length) {
-            rels[type] = value;
-          }
-        });
-
-        return rels;
       }
 
       return obj;

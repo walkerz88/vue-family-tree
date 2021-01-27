@@ -31,6 +31,9 @@
           >
             {{ dateOfBirth }}
           </div>
+          <button @click.prevent="$emit('set-root-person', id)">
+            root
+          </button>
         </div>
       </div>
       <div
@@ -64,6 +67,7 @@ export default {
     VueFamilyControls
   },
   props: {
+    id: Number,
     image: String,
     name: String,
     dateOfBirth: String,
