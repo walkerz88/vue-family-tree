@@ -23,6 +23,7 @@
     <div class="vue-family-row">
       <div class="vue-family-col">
         <VueFamilyCard
+          :style="{zIndex: 10}"
           :id="item.id"
           :root-person-id="rootPersonId"
           :image="item.image"
@@ -46,9 +47,10 @@
           <span
             class="vue-family-line"
             :style="{
-              width: `${(256 * index + 32)}px`,
-              left: `-${(256 * index + 32)}px`,
-              top: `${10 * (index + 1)}px`
+              width: `${(256 * index + 32 * (index + 1))}px`,
+              left: `-${(256 * index + 32 * (index + 1))}px`,
+              top: `${102 / 2 + 10 * index}px`,
+              borderBottomStyle: index ? 'dashed' : null
             }"
           />
           <VueFamilyBranch
@@ -128,7 +130,7 @@ export default {
 }
 .vue-family-line {
   height: 1px;
-  background: #000;
+  border-bottom: 1px solid rgb(156, 156, 156);
   position: absolute;
 }
 /* .vue-family-row {
