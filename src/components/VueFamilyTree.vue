@@ -37,7 +37,7 @@
 
 <script>
 import VueFamilyBranch from './components/VueFamilyBranch';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash/fp';
 
 export default {
   name: 'VueFamilyTree',
