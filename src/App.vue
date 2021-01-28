@@ -31,41 +31,43 @@ export default {
         {
           id: 1,
           pid: 3,
-          image: 'https://picsum.photos/300/300?random=1',
+          ppid: 5,
+          image: 'https://picsum.photos/id/1/200/300',
           name: 'Jareb Walker',
           dateOfBirth: '09.12.1985'
         },
         {
           id: 2,
           partner_id: 1,
-          image: 'https://picsum.photos/300/300?random=2',
+          image: 'https://picsum.photos/id/100/200/300',
           name: 'Anna Koska',
           dateOfBirth: '09.12.1985'
         },
         {
           id: 4,
           partner_id: 1,
-          image: 'https://picsum.photos/300/300?random=4',
+          image: 'https://picsum.photos/id/200/200/300',
           name: 'Katia Ruski',
           dateOfBirth: '09.12.1990'
         },
         {
           id: 3,
-          image: 'https://picsum.photos/300/300?random=3',
+          image: 'https://picsum.photos/id/700/200/300',
           name: 'Oleg Walker',
           dateOfBirth: '04.07.1964'
         },
         {
           id: 5,
           partner_id: 3,
-          image: 'https://picsum.photos/300/300?random=3',
+          image: 'https://picsum.photos/id/400/200/300',
           name: 'Janna Dark',
           dateOfBirth: '11.07.1944'
         },
         {
           id: 6,
           pid: 1,
-          image: 'https://picsum.photos/300/300?random=4',
+          ppid: 2,
+          image: 'https://picsum.photos/id/500/200/300',
           name: 'Antonio Walker',
           dateOfBirth: '18.02.1994'
         },

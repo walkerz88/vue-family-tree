@@ -43,6 +43,14 @@
           }"
           class="vue-family-col vue-family-col_partner"
         >
+          <span
+            class="vue-family-line"
+            :style="{
+              width: `${(256 * index + 32)}px`,
+              left: `-${(256 * index + 32)}px`,
+              top: `${10 * (index + 1)}px`
+            }"
+          />
           <VueFamilyBranch
             :item="partner"
             :editable="editable"
@@ -117,6 +125,11 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+}
+.vue-family-line {
+  height: 1px;
+  background: #000;
+  position: absolute;
 }
 /* .vue-family-row {
   display: flex;

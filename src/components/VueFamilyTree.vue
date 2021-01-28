@@ -104,6 +104,14 @@ export default {
         // find grand parents person
         const rootPerson = array.find(item => (item.id === this.rootPersonId));
 
+        array = array.map(item => {
+          if (item.ppid === rootPerson.id) {
+            item.ppid = item.pid;
+            item.pid = rootPerson.id;
+          }
+          return item;
+        });
+
         if (rootPerson.partner_id) {
           array = array.map(item => {
             if (item.id === rootPerson.partner_id) {
