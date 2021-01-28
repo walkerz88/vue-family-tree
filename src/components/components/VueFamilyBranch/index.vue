@@ -19,7 +19,6 @@
           @set-root-person="$emit('set-root-person', $event)"
         />
       </div>
-      
     </div>
     <div class="vue-family-row">
       <div class="vue-family-col">
@@ -50,7 +49,7 @@
               width: `${(256 * index + 32 * (index + 1))}px`,
               left: `-${(256 * index + 32 * (index + 1))}px`,
               top: `${102 / 2 + 10 * index}px`,
-              borderBottomStyle: index ? 'dashed' : null
+              borderBottomStyle: getPartnerLineStyle(partner.partner_relation)
             }"
           />
           <VueFamilyBranch
@@ -112,6 +111,14 @@ export default {
   methods: {
     addPartner (item) {
       this.$emit('add-partner', item);
+    },
+    getPartnerLineStyle (relation) {
+      let style = 'solid';
+      switch(relation) {
+        case 'ex': style = 'dashed'; break;
+        default: style = 'solid';
+      }
+      return style;
     }
   }
 }
@@ -134,17 +141,4 @@ export default {
   position: absolute;
   z-index: -1;
 }
-/* .vue-family-row {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  & + .vue-family-row {
-    margin-top: 70px;
-  }
-}
-.vue-family-col {
-  & + .vue-family-col {
-    margin-left: 70px;
-  }
-} */
 </style>

@@ -39,6 +39,7 @@ export default {
         {
           id: 2,
           partner_id: 1,
+          partner_relation: 'red',
           image: 'https://picsum.photos/id/100/200/300',
           name: 'Anna Koska',
           dateOfBirth: '09.12.1985'
@@ -46,6 +47,7 @@ export default {
         {
           id: 4,
           partner_id: 1,
+          partner_relation: 'ex',
           image: 'https://picsum.photos/id/200/200/300',
           name: 'Katia Ruski',
           dateOfBirth: '09.12.1990'

@@ -116,10 +116,12 @@ export default {
           array = array.map(item => {
             if (item.id === rootPerson.partner_id) {
               item.partner_id = rootPerson.id;
+              item.partner_relation = rootPerson.partner_relation;
             }
             return item;
           });
           delete rootPerson.partner_id;
+          delete rootPerson.partner_relation;
         }
 
         obj = {
