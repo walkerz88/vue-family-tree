@@ -19,11 +19,11 @@
           @set-root-person="$emit('set-root-person', $event)"
         />
       </div>
+      
     </div>
     <div class="vue-family-row">
       <div class="vue-family-col">
         <VueFamilyCard
-          :style="{zIndex: 10}"
           :id="item.id"
           :root-person-id="rootPersonId"
           :image="item.image"
@@ -132,6 +132,7 @@ export default {
   height: 1px;
   border-bottom: 1px solid rgb(156, 156, 156);
   position: absolute;
+  z-index: -1;
 }
 /* .vue-family-row {
   display: flex;
