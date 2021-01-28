@@ -17,7 +17,8 @@
       ...wrapperStyles,
     }"
   >
-    {{ familyTree }}
+    <p>{{ tree }}</p>
+    <p>{{ familyTree }}</p>
     <VueFamilyBranch
       ref="tree"
       :item="familyTree"
@@ -36,6 +37,7 @@
 
 <script>
 import VueFamilyBranch from './components/VueFamilyBranch';
+import { cloneDeep } from 'lodash';
 
 export default {
   name: 'VueFamilyTree',
@@ -97,8 +99,7 @@ export default {
   computed: {
     familyTree () {
       let obj = {}
-
-      let array = this.tree;
+      let array = cloneDeep(this.tree);
       if (array && Array.isArray(array) && array.length) {
 
         // find grand parents person

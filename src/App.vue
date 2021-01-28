@@ -37,6 +37,14 @@ export default {
           dateOfBirth: '09.12.1985'
         },
         {
+          id: 7,
+          pid: 3,
+          ppid: 5,
+          image: 'https://picsum.photos/id/800/200/300',
+          name: 'Jareb Walker Brother',
+          dateOfBirth: '08.07.1990'
+        },
+        {
           id: 2,
           partner_id: 1,
           partner_relation: 'red',
