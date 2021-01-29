@@ -136,7 +136,7 @@ export default {
         let parents = [];
         let childrens = [];
         let siblings = [];
-        let partners = array.filter(item => item.partner_id === person.id);
+        let partners = [];
 
         if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
           if (person.ppid) {
@@ -144,13 +144,9 @@ export default {
           } else if (person.pid) {
             siblings = array.filter(item => item.id !== person.id && item.pid === person.pid);
           }
-        }
 
-        if (!prevPerson || (person.pid && person.pid !== prevPerson.id)) {
-          parents = array.filter(item => item.id === person.pid);
-        }
-
-        if (!prevPerson || (person.id !== prevPerson.pid)) {
+          partners = array.filter(item => item.partner_id === person.id);
+          parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
           childrens = array.filter(item => item.pid === person.id);
         }
 

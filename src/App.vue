@@ -36,12 +36,14 @@ export default {
         {
           id: 2,
           pid: 1,
+          ppid: 5,
           image: 'https://picsum.photos/id/100/200/300',
           name: 'Oleg Walkerz'
         },
         {
           id: 3,
           pid: 1,
+          ppid: 5,
           image: 'https://picsum.photos/id/400/200/300',
           name: 'Irina Walkerz'
         },
@@ -50,6 +52,12 @@ export default {
           partner_id: 2,
           image: 'https://picsum.photos/id/500/200/300',
           name: 'Oleg Wife'
+        },
+        {
+          id: 5,
+          partner_id: 1,
+          image: 'https://picsum.photos/id/600/200/300',
+          name: 'John Wife'
         }
         /* {
           id: 1,
