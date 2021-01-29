@@ -17,8 +17,7 @@
       ...wrapperStyles,
     }"
   >
-    <p>{{ tree }}</p>
-    <p>{{ familyTree }}</p>
+    <pre>{{ familyTree }}</pre>
     <VueFamilyBranch
       ref="tree"
       :item="familyTree"
@@ -102,7 +101,7 @@ export default {
       let array = cloneDeep(this.tree);
       if (array && Array.isArray(array) && array.length) {
 
-        // find grand parents person
+        // Find grand parents person
         const rootPerson = array.find(item => (item.id === this.rootPersonId));
 
         array = array.map(item => {
@@ -136,7 +135,16 @@ export default {
 
         let parents = [];
         let childrens = [];
+        let siblings = [];
         let partners = array.filter(item => item.partner_id === person.id);
+
+        if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
+          if (person.ppid) {
+            siblings = array.filter(item => item.id !== person.id && item.pid === person.pid && item.ppid === person.ppid);
+          } else if (person.pid) {
+            siblings = array.filter(item => item.id !== person.id && item.pid === person.pid);
+          }
+        }
 
         if (!prevPerson || (person.pid && person.pid !== prevPerson.id)) {
           parents = array.filter(item => item.id === person.pid);
@@ -157,6 +165,8 @@ export default {
         }
 
         if (partners && partners.length) {
+          // Sort partners: married first
+          partners.sort(item => item.partner_relation ? 1 : -1);
           partners = partners.map(item => {
             return {
               ...item,
@@ -175,6 +185,18 @@ export default {
           });
           rel.childrens = childrens;
         }
+
+        if (siblings && siblings.length) {
+          siblings = siblings.map(item => {
+            return {
+              ...item,
+              ...findRelations(item, person)
+            }
+          });
+          rel.siblings = siblings;
+        }
+
+
 
         return rel;
       }

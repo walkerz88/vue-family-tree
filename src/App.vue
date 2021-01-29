@@ -26,9 +26,32 @@ export default {
   data () {
     return {
       customCard: false,
-      rootPersonId: 1,
+      rootPersonId: 2,
       tree: [
         {
+          id: 1,
+          image: 'https://picsum.photos/id/1/200/300',
+          name: 'John Walkerz'
+        },
+        {
+          id: 2,
+          pid: 1,
+          image: 'https://picsum.photos/id/100/200/300',
+          name: 'Oleg Walkerz'
+        },
+        {
+          id: 3,
+          pid: 1,
+          image: 'https://picsum.photos/id/400/200/300',
+          name: 'Irina Walkerz'
+        },
+        {
+          id: 4,
+          partner_id: 2,
+          image: 'https://picsum.photos/id/500/200/300',
+          name: 'Oleg Wife'
+        }
+        /* {
           id: 1,
           pid: 3,
           ppid: 5,
@@ -45,20 +68,19 @@ export default {
           dateOfBirth: '08.07.1990'
         },
         {
-          id: 2,
-          partner_id: 1,
-          partner_relation: 'red',
-          image: 'https://picsum.photos/id/100/200/300',
-          name: 'Anna Koska',
-          dateOfBirth: '09.12.1985'
-        },
-        {
           id: 4,
           partner_id: 1,
           partner_relation: 'ex',
           image: 'https://picsum.photos/id/200/200/300',
           name: 'Katia Ruski',
           dateOfBirth: '09.12.1990'
+        },
+        {
+          id: 2,
+          partner_id: 1,
+          image: 'https://picsum.photos/id/100/200/300',
+          name: 'Anna Koska',
+          dateOfBirth: '09.12.1985'
         },
         {
           id: 3,
@@ -80,7 +102,7 @@ export default {
           image: 'https://picsum.photos/id/500/200/300',
           name: 'Antonio Walker',
           dateOfBirth: '18.02.1994'
-        },
+        }, */
       ]
     }
   },

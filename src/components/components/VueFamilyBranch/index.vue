@@ -1,11 +1,12 @@
 <template>
   <div class="vue-family-branch">
     <div
-      v-if="item.parents && Array.isArray(item.parents) && item.parents.length && !item.partner_id"
+      v-if="item.parents && Array.isArray(item.parents) && item.parents.length && item.id === rootPersonId"
       class="vue-family-row"
       :style="{
+        position: 'absolute',
         top: `-${102 + 48}px`,
-        left: `-${(256 + 32) * item.parents.length / 2 }px`
+        left: `-${(256 + 32) * (item.parents.length - 1) / 2 }px`
       }"
     >
       <div class="vue-family-col vue-family-col_parents"
@@ -37,9 +38,9 @@
       <template v-if="item.partners && item.partners.length && !item.partner_id">
         <div
           v-for="(partner, index) in item.partners"
-          :key="index"
+          :key="`partner_${index}`"
           :style="{
-            left: `${(256 + 32) * (index + 1)}px`
+            // left: `${(256 + 32) * (index + 1)}px`
           }"
           class="vue-family-col vue-family-col_partner"
         >
@@ -60,11 +61,38 @@
           />
         </div>
       </template>
+      <template v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length && item.id === rootPersonId">
+        <div
+          v-for="(partner, index) in item.siblings"
+          :key="`sibling_${index}`"
+          :style="{
+            // left: `${(256 + 32) * (index + 1)}px`
+          }"
+          class="vue-family-col vue-family-col_sibling"
+        >
+          <!-- <span
+            class="vue-family-line"
+            :style="{
+              width: `${(256 * index + 32 * (index + 1))}px`,
+              left: `-${(256 * index + 32 * (index + 1))}px`,
+              top: `${102 / 2 + 10 * index}px`,
+              borderBottomStyle: getPartnerLineStyle(partner.partner_relation)
+            }"
+          /> -->
+          <VueFamilyBranch
+            :item="partner"
+            :editable="editable"
+            :preventMouseEvents="preventMouseEvents"
+            @set-root-person="$emit('set-root-person', $event)"
+          />
+        </div>
+      </template>
     </div>
     <div
       v-if="item.childrens && Array.isArray(item.childrens) && item.childrens.length && !item.partner_id"
       class="vue-family-row"
       :style="{
+        position: 'absolute',
         top: `${102 + 48}px`,
         left: `${(256 + 32) * item.childrens.length / 2 }px`
       }"
@@ -126,14 +154,19 @@ export default {
 
 <style lang="scss" scoped>
 .vue-family-row {
-  position: absolute;
+  display: flex;
+  /* position: absolute;
   top: 0;
-  left: 0;
+  left: 0; */
 }
 .vue-family-col {
-  position: absolute;
+  position: relative;
+  & + .vue-family-col {
+    margin-left: 32px;
+  }
+  /* position: absolute;
   top: 0;
-  left: 0;
+  left: 0; */
 }
 .vue-family-line {
   height: 1px;
