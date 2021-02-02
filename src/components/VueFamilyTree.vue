@@ -145,8 +145,8 @@ export default {
             siblings = array.filter(item => item.id !== person.id && item.pid === person.pid);
           }
 
-          partners = array.filter(item => item.partner_id === person.id);
           parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
+          partners = array.filter(item => item.partner_id === person.id);
           childrens = array.filter(item => item.pid === person.id);
         }
 
@@ -191,8 +191,6 @@ export default {
           });
           rel.siblings = siblings;
         }
-
-
 
         return rel;
       }

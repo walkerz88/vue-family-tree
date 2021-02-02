@@ -5,8 +5,9 @@
       class="vue-family-row"
       :style="{
         position: 'absolute',
-        top: `-${102 + 48}px`,
-        left: `-${(256 + 32) * (item.parents.length - 1) / 2 }px`
+        top: `-${102 + 82}px`,
+        left: '50%',
+        transform: 'translateX(-50%)'
       }"
     >
       <div class="vue-family-col vue-family-col_parents"
@@ -22,7 +23,20 @@
       </div>
     </div>
     <div class="vue-family-row">
+      <span
+        v-show="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
+        class="vue-family-line"
+        :style="{
+          top: '-33px',
+          width: 'calc(100% - 256px)',
+          left: 'calc(256px / 2 + 1px)'
+        }"
+      />
       <div class="vue-family-col">
+        <span
+          v-show="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
+          class="vue-family-line vue-family-line_sibling"
+        />
         <VueFamilyCard
           :id="item.id"
           :root-person-id="rootPersonId"
@@ -65,20 +79,9 @@
         <div
           v-for="(partner, index) in item.siblings"
           :key="`sibling_${index}`"
-          :style="{
-            // left: `${(256 + 32) * (index + 1)}px`
-          }"
           class="vue-family-col vue-family-col_sibling"
         >
-          <!-- <span
-            class="vue-family-line"
-            :style="{
-              width: `${(256 * index + 32 * (index + 1))}px`,
-              left: `-${(256 * index + 32 * (index + 1))}px`,
-              top: `${102 / 2 + 10 * index}px`,
-              borderBottomStyle: getPartnerLineStyle(partner.partner_relation)
-            }"
-          /> -->
+          <span class="vue-family-line vue-family-line_sibling"/>
           <VueFamilyBranch
             :item="partner"
             :editable="editable"
@@ -170,8 +173,17 @@ export default {
 }
 .vue-family-line {
   height: 1px;
-  border-bottom: 1px solid rgb(156, 156, 156);
+  border-color: rgb(156, 156, 156);
+  border-style: solid;
+  border-width: 0 0 1px 0;
   position: absolute;
   z-index: -1;
+  &_sibling {
+    width: 1px;
+    height: 32px;
+    top: -32px;
+    left: 50%;
+    border-width: 0 1px 0 0;
+  }
 }
 </style>
