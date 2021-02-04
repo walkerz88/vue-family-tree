@@ -36,14 +36,14 @@ export default {
         cardHeight: 102
       },
       tree: [
-        {
+        /* {
           id: 9,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Father'
-        },
+        }, */
         {
           id: 1,
-          pid: 9,
+          // pid: 9,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Walkerz'
         },
@@ -59,14 +59,14 @@ export default {
           pid: 1,
           ppid: 5,
           image: 'https://picsum.photos/id/400/200/300',
-          name: 'Irina Walkerz'
+          name: 'Oleg Sister'
         },
         {
           id: 6,
           pid: 1,
           ppid: 5,
           image: 'https://picsum.photos/id/400/200/300',
-          name: 'Kristian Walkerz'
+          name: 'Oleg Brother'
         },
         {
           id: 4,

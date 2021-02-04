@@ -109,7 +109,7 @@
               width: `${gutters}px`,
               height: `${gutters}px`,
               top: `-${gutters}px`,
-              right: '50%',
+              left: `${cardWidth / 2 - gutters}px`,
               borderWidth: '1px 1px 0 0',
               borderStyle: 'solid',
               borderColor: lineColor,

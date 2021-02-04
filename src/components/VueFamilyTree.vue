@@ -178,7 +178,7 @@ export default {
         // Parents
         let parents = [];
 
-        if (['partners', 'childrens'].indexOf(type) === -1) {
+        if (['partners', 'childrens', 'siblings'].indexOf(type) === -1) {
           parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
           
           if (parents && parents.length) {
@@ -192,16 +192,33 @@ export default {
           } 
         }
 
-        // 
-        // let childrens = [];
-        // let siblings = [];
+        // Siblings
+        let siblings = [];
 
-        /*if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
+        if (['partners', 'childrens', 'siblings'].indexOf(type) === -1) {
           if (person.ppid) {
             siblings = array.filter(item => item.id !== person.id && item.pid === person.pid && item.ppid === person.ppid);
           } else if (person.pid) {
             siblings = array.filter(item => item.id !== person.id && item.pid === person.pid);
           }
+
+          if (siblings && siblings.length) {
+            siblings = siblings.map(item => {
+              return {
+                ...item,
+                ...findRelations(item, 'siblings')
+              }
+            });
+            rel.siblings = siblings;
+          } 
+        }
+
+        // 
+        // let childrens = [];
+        // 
+
+        /*if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
+          
 
           parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
           partners = array.filter(item => item.partner_id === person.id);
@@ -218,15 +235,7 @@ export default {
           rel.childrens = childrens;
         }
 
-        if (siblings && siblings.length) {
-          siblings = siblings.map(item => {
-            return {
-              ...item,
-              ...findRelations(item, 'siblings')
-            }
-          });
-          rel.siblings = siblings;
-        } */
+        */
 
         return rel;
       }
