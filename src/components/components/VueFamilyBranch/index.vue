@@ -5,8 +5,8 @@
       class="vue-family-row"
       :style="{
         position: 'absolute',
-        top: `-${cardHeight + gutters + (item.siblings && item.siblings.length ? gutters : 0)}px`,
-        left: `-${cardWidth / 2 * (item.parents.length - 1) + gutters / 2 * (item.parents.length - 1)}px`
+        top: calcParentsPosition().top,
+        left: calcParentsPosition().left
       }"
     >
       <div class="vue-family-col vue-family-col_parents">
@@ -198,6 +198,24 @@ export default {
     }
   },
   methods: {
+    calcParentsPosition () {
+      const item = this.item;
+      const cardWidth = this.cardWidth;
+      const cardHeight = this.cardHeight;
+      const gutters = this.gutters;
+      const koef = item.parents.length - 1;
+      let top = `-${cardHeight + gutters + (item.siblings && item.siblings.length ? gutters : 0)}px`;
+      let left = `-${cardWidth / 2 * koef + gutters / 2 * koef}px`;
+
+      if (item.siblings) {
+        left = `calc(50% - ${koef ? cardWidth * koef + gutters / 2 * koef : cardWidth / 2}px)`;
+      }
+
+      return {
+        top,
+        left
+      }
+    },
     addPartner (item) {
       this.$emit('add-partner', item);
     },

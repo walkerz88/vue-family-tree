@@ -50,7 +50,7 @@ export default {
         {
           id: 2,
           pid: 1,
-          ppid: 5,
+          // ppid: 5,
           image: 'https://picsum.photos/id/100/200/300',
           name: 'Oleg Walkerz'
         },
