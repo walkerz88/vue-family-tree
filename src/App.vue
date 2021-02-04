@@ -37,7 +37,13 @@ export default {
       },
       tree: [
         {
+          id: 9,
+          image: 'https://picsum.photos/id/1/200/300',
+          name: 'John Father'
+        },
+        {
           id: 1,
+          pid: 9,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Walkerz'
         },
@@ -77,9 +83,15 @@ export default {
         },
         {
           id: 5,
-          partner_id: 1,
           image: 'https://picsum.photos/id/600/200/300',
           name: 'John Wife'
+        },
+        {
+          id: 8,
+          partner_id: 1,
+          partner_status: 'ex',
+          image: 'https://picsum.photos/id/600/200/300',
+          name: 'John Ex'
         }
         /* {
           id: 1,

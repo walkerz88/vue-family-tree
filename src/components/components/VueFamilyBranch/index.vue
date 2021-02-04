@@ -1,7 +1,7 @@
 <template>
   <div class="vue-family-branch">
     <div
-      v-if="item.parents && Array.isArray(item.parents) && item.parents.length && item.id === rootPersonId"
+      v-if="item.parents && Array.isArray(item.parents) && item.parents.length"
       class="vue-family-row"
       :style="{
         position: 'absolute',
@@ -9,12 +9,9 @@
         left: `calc(50% - ${cardWidth / 2 * item.parents.length + gutters / 2 * (item.parents.length - 1)}px`
       }"
     >
-      <div class="vue-family-col vue-family-col_parents"
-        v-for="(parent, index) in item.parents"
-        :key="index"
-      >
+      <div class="vue-family-col vue-family-col_parents">
         <VueFamilyBranch
-          :item="parent"
+          :item="item.parents[0]"
           :gutters="gutters"
           :card-width="cardWidth"
           :card-height="cardHeight"

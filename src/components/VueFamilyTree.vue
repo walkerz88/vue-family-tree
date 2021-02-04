@@ -131,13 +131,21 @@ export default {
           array = array.map(item => {
             if (item.id === rootPerson.partner_id) {
               item.partner_id = rootPerson.id;
-              item.partner_relation = rootPerson.partner_relation;
+              item.partner_status = rootPerson.partner_status;
             }
             return item;
           });
           delete rootPerson.partner_id;
-          delete rootPerson.partner_relation;
+          delete rootPerson.partner_status;
         }
+
+        // Connect parents by partner_id
+        array.forEach(item => {
+          if (item.pid && item.ppid) {
+            let foundPpId = array.find(i => i.id === item.ppid);
+            foundPpId.partner_id = item.pid;
+          }
+        });
 
         obj = {
           ...rootPerson,
@@ -145,15 +153,50 @@ export default {
         }
       }
 
-      function findRelations (person, prevPerson) {
+      function findRelations (person, type) {
         let rel = {};
 
-        let parents = [];
-        let childrens = [];
-        let siblings = [];
+        // Partners
         let partners = [];
 
-        if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
+        if (['partners'].indexOf(type) === -1) {
+          partners = array.filter(item => item.partner_id === person.id);
+
+          if (partners && partners.length) {
+            // Sort partners: married first (no partner_status)
+            partners.sort(item => item.partner_status ? 1 : -1);
+            partners = partners.map(item => {
+              return {
+                ...item,
+                ...findRelations(item, 'partners')
+              }
+            });
+            rel.partners = partners;
+          }
+        }
+
+        // Parents
+        let parents = [];
+
+        if (['partners', 'childrens'].indexOf(type) === -1) {
+          parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
+          
+          if (parents && parents.length) {
+            parents = parents.map(item => {
+              return {
+                ...item,
+                ...findRelations(item, 'parents')
+              }
+            });
+            rel.parents = parents;
+          } 
+        }
+
+        // 
+        // let childrens = [];
+        // let siblings = [];
+
+        /*if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
           if (person.ppid) {
             siblings = array.filter(item => item.id !== person.id && item.pid === person.pid && item.ppid === person.ppid);
           } else if (person.pid) {
@@ -163,35 +206,13 @@ export default {
           parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
           partners = array.filter(item => item.partner_id === person.id);
           childrens = array.filter(item => item.pid === person.id);
-        }
+        }*/
 
-        if (parents && parents.length) {
-          parents = parents.map(item => {
-            return {
-              ...item,
-              ...findRelations(item, person)
-            }
-          });
-          rel.parents = parents;
-        }
-
-        if (partners && partners.length) {
-          // Sort partners: married first
-          partners.sort(item => item.partner_status ? 1 : -1);
-          partners = partners.map(item => {
-            return {
-              ...item,
-              ...findRelations(item, person)
-            }
-          });
-          rel.partners = partners;
-        }
-
-        if (childrens && childrens.length) {
+        /* if (childrens && childrens.length) {
           childrens = childrens.map(item => {
             return {
               ...item,
-              ...findRelations(item, person)
+              ...findRelations(item, 'childrens')
             }
           });
           rel.childrens = childrens;
@@ -201,11 +222,11 @@ export default {
           siblings = siblings.map(item => {
             return {
               ...item,
-              ...findRelations(item, person)
+              ...findRelations(item, 'siblings')
             }
           });
           rel.siblings = siblings;
-        }
+        } */
 
         return rel;
       }
