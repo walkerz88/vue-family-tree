@@ -54,7 +54,7 @@
             borderColor: lineColor,
             borderRadius: '10px 0 0 0'
           }"
-          class="vue-family-line vue-family-line_sibling"
+          class="vue-family-line"
         />
         <!-- // Sibling corner line -->
         <VueFamilyCard
@@ -75,15 +75,19 @@
           :key="`partner_${index}`"
           class="vue-family-col vue-family-col_partner"
         >
+          <!-- Partners connector -->
           <span
             class="vue-family-line"
             :style="{
               width: `${(cardWidth * index + gutters * (index + 1))}px`,
               left: `-${(cardWidth * index + gutters * (index + 1))}px`,
               top: `${cardHeight / 2 + 10 * index}px`,
-              borderBottomStyle: getPartnerLineStyle(partner.partner_relation)
+              borderWidth: '1px',
+              borderBottomStyle: getPartnerLineStyle(partner.partner_status),
+              borderColor: lineColor
             }"
           />
+          <!-- // Partners connector -->
           <VueFamilyBranch
             :item="partner"
             :gutters="gutters"
@@ -114,7 +118,7 @@
               borderColor: lineColor,
               borderRadius: '0 10px 0 0'
             }"
-            class="vue-family-line vue-family-line_sibling"
+            class="vue-family-line"
           />
           <!-- // Sibling corner line -->
           <VueFamilyBranch

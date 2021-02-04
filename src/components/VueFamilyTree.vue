@@ -177,7 +177,7 @@ export default {
 
         if (partners && partners.length) {
           // Sort partners: married first
-          partners.sort(item => item.partner_relation ? 1 : -1);
+          partners.sort(item => item.partner_status ? 1 : -1);
           partners = partners.map(item => {
             return {
               ...item,

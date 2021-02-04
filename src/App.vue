@@ -69,6 +69,13 @@ export default {
           name: 'Oleg Wife'
         },
         {
+          id: 7,
+          partner_id: 2,
+          partner_status: 'ex',
+          image: 'https://picsum.photos/id/500/200/300',
+          name: 'Oleg Ex'
+        },
+        {
           id: 5,
           partner_id: 1,
           image: 'https://picsum.photos/id/600/200/300',
