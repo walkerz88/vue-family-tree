@@ -116,7 +116,7 @@
           />
         </div>
       </template>
-      <template v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length && item.id === rootPersonId">
+      <template v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length">
         <div
           v-for="(partner, index) in item.siblings"
           :key="`sibling_${index}`"
@@ -249,7 +249,11 @@ export default {
       } else {
         top = `${cardHeight}px`;
         left = `${cardWidth / 2}px`;
-        height = `${2 * gutters}px`;
+        if (item.siblings && item.siblings.length) {
+          height = `${gutters}px`;
+        } else {
+          height = `${2 * gutters}px`;
+        }
       }
 
       return {

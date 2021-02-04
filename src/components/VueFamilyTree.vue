@@ -210,7 +210,7 @@ export default {
         // Siblings
         let siblings = [];
 
-        if (['partners', 'childrens', 'siblings'].indexOf(type) === -1) {
+        if (['childrens', 'siblings'].indexOf(type) === -1) {
           if (person.ppid) {
             siblings = array.filter(item => item.id !== person.id && item.pid === person.pid && item.ppid === person.ppid);
           } else if (person.pid) {
