@@ -6,7 +6,7 @@
       :style="{
         position: 'absolute',
         top: `-${cardHeight + gutters + (item.siblings && item.siblings.length ? gutters : 0)}px`,
-        left: `calc(50% - ${cardWidth / 2 * item.parents.length + gutters / 2 * (item.parents.length - 1)}px`
+        left: `-${cardWidth / 2 * (item.parents.length - 1) + gutters / 2 * (item.parents.length - 1)}px`
       }"
     >
       <div class="vue-family-col vue-family-col_parents">
