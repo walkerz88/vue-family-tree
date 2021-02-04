@@ -15,9 +15,9 @@
         :style="{
           top: `${cardHeight / 2}px`,
           left: `${cardWidth + gutters / 2}px`,
-          width: '1px',
+          width: `${lineWidth}px`,
           height: `${cardHeight / 2 + gutters}px`,
-          borderLeftWidth: '1px',
+          borderLeftWidth: `${lineWidth}px`,
           borderLeftStyle: 'solid',
           borderColor: lineColor
         }"
@@ -29,6 +29,9 @@
           :gutters="gutters"
           :card-width="cardWidth"
           :card-height="cardHeight"
+          :line-color="lineColor"
+          :line-width="lineWidth"
+          :line-border-radius="lineBorderRadius"
           :editable="editable"
           :preventMouseEvents="preventMouseEvents"
           @set-root-person="$emit('set-root-person', $event)"
@@ -41,10 +44,10 @@
         v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
         class="vue-family-line"
         :style="{
-          top: `-${gutters + 1}px`,
+          top: `-${gutters + lineWidth}px`,
           width: `calc(100% - ${cardWidth + 2 * gutters}px)`,
-          height: '1px',
-          borderBottomWidth: '1px',
+          height: `${lineWidth}px`,
+          borderBottomWidth: `${lineWidth}px`,
           borderBottomStyle: 'solid',
           borderColor: lineColor,
           left: `calc(${cardWidth}px / 2 + ${gutters}px)`
@@ -60,10 +63,10 @@
             height: `${gutters}px`,
             top: `-${gutters}px`,
             left: '50%',
-            borderWidth: '1px 0 0 1px',
+            borderWidth: `${lineWidth}px 0 0 ${lineWidth}px`,
             borderStyle: 'solid',
             borderColor: lineColor,
-            borderRadius: '10px 0 0 0'
+            borderRadius: `${lineBorderRadius}px 0 0 0`
           }"
           class="vue-family-line"
         />
@@ -93,7 +96,7 @@
               width: `${(cardWidth * index + gutters * (index + 1))}px`,
               left: `-${(cardWidth * index + gutters * (index + 1))}px`,
               top: `${cardHeight / 2 + 10 * index}px`,
-              borderWidth: '1px',
+              borderWidth: `${lineWidth}px`,
               borderBottomStyle: getPartnerLineStyle(partner.partner_status),
               borderColor: lineColor
             }"
@@ -104,6 +107,9 @@
             :gutters="gutters"
             :card-width="cardWidth"
             :card-height="cardHeight"
+            :line-color="lineColor"
+            :line-width="lineWidth"
+            :line-border-radius="lineBorderRadius"
             :editable="editable"
             :preventMouseEvents="preventMouseEvents"
             @set-root-person="$emit('set-root-person', $event)"
@@ -124,10 +130,10 @@
               height: `${gutters}px`,
               top: `-${gutters}px`,
               left: `${cardWidth / 2 - gutters}px`,
-              borderWidth: '1px 1px 0 0',
+              borderWidth: `${lineWidth}px ${lineWidth}px 0 0`,
               borderStyle: 'solid',
               borderColor: lineColor,
-              borderRadius: '0 10px 0 0'
+              borderRadius: `0 ${lineBorderRadius}px 0 0`
             }"
             class="vue-family-line"
           />
@@ -137,6 +143,9 @@
             :gutters="gutters"
             :card-width="cardWidth"
             :card-height="cardHeight"
+            :line-color="lineColor"
+            :line-width="lineWidth"
+            :line-border-radius="lineBorderRadius"
             :editable="editable"
             :preventMouseEvents="preventMouseEvents"
             @set-root-person="$emit('set-root-person', $event)"
@@ -162,6 +171,9 @@
           :gutters="gutters"
           :card-width="cardWidth"
           :card-height="cardHeight"
+          :line-color="lineColor"
+          :line-width="lineWidth"
+          :line-border-radius="lineBorderRadius"
           :editable="editable"
           :preventMouseEvents="preventMouseEvents"
           @set-root-person="$emit('set-root-person', $event)"
@@ -203,7 +215,15 @@ export default {
     },
     lineColor: {
       type: String,
-      default: 'rgb(156, 156, 156)'
+      default: '#b7b7b7'
+    },
+    lineWidth: {
+      type: Number,
+      default: 1
+    },
+    lineBorderRadius: {
+      type: Number,
+      default: 10
     }
   },
   data () {

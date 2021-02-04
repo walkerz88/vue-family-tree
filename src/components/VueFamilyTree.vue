@@ -25,6 +25,9 @@
       :gutters="gutters"
       :card-width="cardWidth"
       :card-height="cardHeight"
+      :line-color="lineColor"
+      :line-width="lineWidth"
+      :line-border-radius="lineBorderRadius"
       :editable="editable"
       :style="{
         position: draggable ? 'absolute' : null,
@@ -91,6 +94,18 @@ export default {
     cardHeight: {
       type: Number,
       default: 102
+    },
+    lineWidth: {
+      type: Number,
+      default: 1
+    },
+    lineColor: {
+      type: String,
+      default: '#b7b7b7'
+    },
+    lineBorderRadius: {
+      type: Number,
+      default: 10
     }
   },
   data () {

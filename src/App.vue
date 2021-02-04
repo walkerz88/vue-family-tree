@@ -7,6 +7,8 @@
       :gutters="options.gutters"
       :card-width="options.cardWidth"
       :card-height="options.cardHeight"
+      :line-width="options.lineWidth"
+      :line-border-radius="options.lineBorderRadius"
       :wrapperStyles="{
         position: 'relative',
         width: '100%',
@@ -33,7 +35,10 @@ export default {
       options: {
         gutters: 32,
         cardWidth: 256,
-        cardHeight: 102
+        cardHeight: 102,
+        lineWidth: 1,
+        lineColor: '#b7b7b7',
+        lineBorderRadius: 10
       },
       tree: [
         /* {
