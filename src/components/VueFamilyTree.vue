@@ -22,6 +22,9 @@
       ref="tree"
       :item="familyTree"
       :root-person-id="rootPersonId"
+      :gutters="gutters"
+      :card-width="cardWidth"
+      :card-height="cardHeight"
       :editable="editable"
       :style="{
         position: draggable ? 'absolute' : null,
@@ -76,6 +79,18 @@ export default {
     mouseChangeDiff: {
       type: Number,
       default: 2
+    },
+    gutters: {
+      type: Number,
+      default: 32
+    },
+    cardWidth: {
+      type: Number,
+      default: 256
+    },
+    cardHeight: {
+      type: Number,
+      default: 102
     }
   },
   data () {

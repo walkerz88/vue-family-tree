@@ -5,9 +5,8 @@
       class="vue-family-row"
       :style="{
         position: 'absolute',
-        top: `-${102 + 82}px`,
-        left: '50%',
-        transform: 'translateX(-50%)'
+        top: `-${cardHeight + gutters + (item.siblings && item.siblings.length ? gutters : 0)}px`,
+        left: `calc(50% - ${cardWidth / 2 * item.parents.length + gutters / 2 * (item.parents.length - 1)}px`
       }"
     >
       <div class="vue-family-col vue-family-col_parents"
@@ -16,6 +15,9 @@
       >
         <VueFamilyBranch
           :item="parent"
+          :gutters="gutters"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
           :editable="editable"
           :preventMouseEvents="preventMouseEvents"
           @set-root-person="$emit('set-root-person', $event)"
@@ -23,20 +25,38 @@
       </div>
     </div>
     <div class="vue-family-row">
+      <!-- Siblings connector -->
       <span
-        v-show="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
+        v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
         class="vue-family-line"
         :style="{
-          top: '-33px',
-          width: 'calc(100% - 256px)',
-          left: 'calc(256px / 2 + 1px)'
+          top: `-${gutters + 1}px`,
+          width: `calc(100% - ${cardWidth + 2 * gutters}px)`,
+          height: '1px',
+          borderBottomWidth: '1px',
+          borderBottomStyle: 'solid',
+          borderColor: lineColor,
+          left: `calc(${cardWidth}px / 2 + ${gutters}px)`
         }"
       />
+      <!-- // Siblings connector -->
       <div class="vue-family-col">
+        <!-- Sibling corner line -->
         <span
           v-show="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
+          :style="{
+            width: `${gutters}px`,
+            height: `${gutters}px`,
+            top: `-${gutters}px`,
+            left: '50%',
+            borderWidth: '1px 0 0 1px',
+            borderStyle: 'solid',
+            borderColor: lineColor,
+            borderRadius: '10px 0 0 0'
+          }"
           class="vue-family-line vue-family-line_sibling"
         />
+        <!-- // Sibling corner line -->
         <VueFamilyCard
           :id="item.id"
           :root-person-id="rootPersonId"
@@ -53,22 +73,22 @@
         <div
           v-for="(partner, index) in item.partners"
           :key="`partner_${index}`"
-          :style="{
-            // left: `${(256 + 32) * (index + 1)}px`
-          }"
           class="vue-family-col vue-family-col_partner"
         >
           <span
             class="vue-family-line"
             :style="{
-              width: `${(256 * index + 32 * (index + 1))}px`,
-              left: `-${(256 * index + 32 * (index + 1))}px`,
-              top: `${102 / 2 + 10 * index}px`,
+              width: `${(cardWidth * index + gutters * (index + 1))}px`,
+              left: `-${(cardWidth * index + gutters * (index + 1))}px`,
+              top: `${cardHeight / 2 + 10 * index}px`,
               borderBottomStyle: getPartnerLineStyle(partner.partner_relation)
             }"
           />
           <VueFamilyBranch
             :item="partner"
+            :gutters="gutters"
+            :card-width="cardWidth"
+            :card-height="cardHeight"
             :editable="editable"
             :preventMouseEvents="preventMouseEvents"
             @set-root-person="$emit('set-root-person', $event)"
@@ -81,9 +101,27 @@
           :key="`sibling_${index}`"
           class="vue-family-col vue-family-col_sibling"
         >
-          <span class="vue-family-line vue-family-line_sibling"/>
+          <!-- Sibling corner line -->
+          <span
+            v-show="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
+            :style="{
+              width: `${gutters}px`,
+              height: `${gutters}px`,
+              top: `-${gutters}px`,
+              right: '50%',
+              borderWidth: '1px 1px 0 0',
+              borderStyle: 'solid',
+              borderColor: lineColor,
+              borderRadius: '0 10px 0 0'
+            }"
+            class="vue-family-line vue-family-line_sibling"
+          />
+          <!-- // Sibling corner line -->
           <VueFamilyBranch
             :item="partner"
+            :gutters="gutters"
+            :card-width="cardWidth"
+            :card-height="cardHeight"
             :editable="editable"
             :preventMouseEvents="preventMouseEvents"
             @set-root-person="$emit('set-root-person', $event)"
@@ -96,8 +134,8 @@
       class="vue-family-row"
       :style="{
         position: 'absolute',
-        top: `${102 + 48}px`,
-        left: `${(256 + 32) * item.childrens.length / 2 }px`
+        top: `${cardHeight + gutters}px`,
+        left: `${(cardWidth + gutters) * item.childrens.length / 2 }px`
       }"
     >
       <div class="vue-family-col vue-family-col_childrens"
@@ -106,6 +144,9 @@
       >
         <VueFamilyBranch
           :item="children"
+          :gutters="gutters"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
           :editable="editable"
           :preventMouseEvents="preventMouseEvents"
           @set-root-person="$emit('set-root-person', $event)"
@@ -132,6 +173,22 @@ export default {
     preventMouseEvents: {
       type: Boolean,
       default: false
+    },
+    gutters: {
+      type: Number,
+      default: 32
+    },
+    cardWidth: {
+      type: Number,
+      default: 256
+    },
+    cardHeight: {
+      type: Number,
+      default: 102
+    },
+    lineColor: {
+      type: String,
+      default: 'rgb(156, 156, 156)'
     }
   },
   data () {
@@ -172,18 +229,7 @@ export default {
   left: 0; */
 }
 .vue-family-line {
-  height: 1px;
-  border-color: rgb(156, 156, 156);
-  border-style: solid;
-  border-width: 0 0 1px 0;
   position: absolute;
   z-index: -1;
-  &_sibling {
-    width: 1px;
-    height: 32px;
-    top: -32px;
-    left: 50%;
-    border-width: 0 1px 0 0;
-  }
 }
 </style>

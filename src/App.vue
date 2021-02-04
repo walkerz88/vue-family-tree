@@ -4,6 +4,9 @@
       ref="tree"
       :tree="tree"
       :root-person-id="rootPersonId"
+      :gutters="options.gutters"
+      :card-width="options.cardWidth"
+      :card-height="options.cardHeight"
       :wrapperStyles="{
         position: 'relative',
         width: '100%',
@@ -27,6 +30,11 @@ export default {
     return {
       customCard: false,
       rootPersonId: 2,
+      options: {
+        gutters: 32,
+        cardWidth: 256,
+        cardHeight: 102
+      },
       tree: [
         {
           id: 1,
@@ -46,6 +54,13 @@ export default {
           ppid: 5,
           image: 'https://picsum.photos/id/400/200/300',
           name: 'Irina Walkerz'
+        },
+        {
+          id: 6,
+          pid: 1,
+          ppid: 5,
+          image: 'https://picsum.photos/id/400/200/300',
+          name: 'Kristian Walkerz'
         },
         {
           id: 4,
