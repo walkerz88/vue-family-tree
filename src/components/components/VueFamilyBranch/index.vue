@@ -245,7 +245,11 @@ export default {
       if (item.parents && item.parents.length > 1) {
         top = `${cardHeight / 2}px`;
         left = `${cardWidth + gutters / 2}px`;
-        height = `${cardHeight / 2 + gutters}px`;
+        if (item.siblings && item.siblings.length) {
+          height = `${cardHeight / 2 + gutters}px`;
+        } else {
+          height = `${cardHeight / 2 + 2 * gutters}px`;
+        }
       } else {
         top = `${cardHeight}px`;
         left = `${cardWidth / 2}px`;

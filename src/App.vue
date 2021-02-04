@@ -61,7 +61,6 @@ export default {
         {
           id: 10,
           pid: 9,
-          ppid: 11,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Brother'
         },
