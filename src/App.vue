@@ -41,14 +41,14 @@ export default {
         lineBorderRadius: 10
       },
       tree: [
-        /* {
+        {
           id: 9,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Father'
-        }, */
+        },
         {
           id: 1,
-          // pid: 9,
+          pid: 9,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Walkerz'
         },

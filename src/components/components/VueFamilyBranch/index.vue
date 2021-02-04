@@ -13,10 +13,10 @@
       <div
         class="vue-family-line"
         :style="{
-          top: `${cardHeight / 2}px`,
-          left: `${cardWidth + gutters / 2}px`,
+          top: calcParentConnector().top,
+          left: calcParentConnector().left,
           width: `${lineWidth}px`,
-          height: `${cardHeight / 2 + gutters}px`,
+          height: calcParentConnector().height,
           borderLeftWidth: `${lineWidth}px`,
           borderLeftStyle: 'solid',
           borderColor: lineColor
@@ -232,17 +232,45 @@ export default {
     }
   },
   methods: {
+    calcParentConnector () {
+      const item = this.item;
+      const cardWidth = this.cardWidth;
+      const cardHeight = this.cardHeight;
+      const gutters = this.gutters;
+
+      let top = 0;
+      let left = 0;
+      let height = 0;
+
+      if (item.parents && item.parents.length > 1) {
+        top = `${cardHeight / 2}px`;
+        left = `${cardWidth + gutters / 2}px`;
+        height = `${cardHeight / 2 + gutters}px`;
+      } else {
+        top = `${cardHeight}px`;
+        left = `${cardWidth / 2}px`;
+        height = `${2 * gutters}px`;
+      }
+
+      return {
+        top,
+        left,
+        height
+      }
+    },
     calcParentsPosition () {
       const item = this.item;
       const cardWidth = this.cardWidth;
       const cardHeight = this.cardHeight;
       const gutters = this.gutters;
       const koef = item.parents.length - 1;
-      let top = `-${cardHeight + gutters + (item.siblings && item.siblings.length ? gutters : 0)}px`;
-      let left = `-${cardWidth / 2 * koef + gutters / 2 * koef}px`;
+      let top = `-${cardHeight + 2 * gutters}px`;
+      let left = 0;
 
       if (item.siblings) {
         left = `calc(50% - ${koef ? cardWidth * koef + gutters / 2 * koef : cardWidth / 2}px)`;
+      } else {
+        left = `-${cardWidth / 2 * koef + gutters / 2 * koef}px`;
       }
 
       return {
