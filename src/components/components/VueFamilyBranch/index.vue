@@ -9,6 +9,20 @@
         left: calcParentsPosition().left
       }"
     >
+      <!-- Parents connector -->
+      <div
+        class="vue-family-line"
+        :style="{
+          top: `${cardHeight / 2}px`,
+          left: `${cardWidth + gutters / 2}px`,
+          width: '1px',
+          height: `${cardHeight / 2 + gutters}px`,
+          borderLeftWidth: '1px',
+          borderLeftStyle: 'solid',
+          borderColor: lineColor
+        }"
+      />
+      <!-- // Parents connector -->
       <div class="vue-family-col vue-family-col_parents">
         <VueFamilyBranch
           :item="item.parents[0]"
