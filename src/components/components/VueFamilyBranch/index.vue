@@ -41,16 +41,16 @@
     <div class="vue-family-row">
       <!-- Siblings connector -->
       <span
-        v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
-        class="vue-family-line"
+        v-if="siblingsConnector.width"
+        class="vue-family-line siblings-connector"
         :style="{
           top: `-${gutters + lineWidth}px`,
-          width: `calc(100% - ${cardWidth + 2 * gutters}px)`,
+          width: `${siblingsConnector.width}px`,
           height: `${lineWidth}px`,
           borderBottomWidth: `${lineWidth}px`,
           borderBottomStyle: 'solid',
           borderColor: lineColor,
-          left: `calc(${cardWidth}px / 2 + ${gutters}px)`
+          left: `-${this.siblingsConnector.width - this.cardWidth / 2 + gutters}px`
         }"
       />
       <!-- // Siblings connector -->
@@ -72,6 +72,7 @@
         />
         <!-- // Sibling corner line -->
         <VueFamilyCard
+          :data-type="type ? `type_${item.id}`: null"
           :id="item.id"
           :root-person-id="rootPersonId"
           :image="item.image"
@@ -118,9 +119,10 @@
       </template>
       <template v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length">
         <div
-          v-for="(partner, index) in item.siblings"
+          v-for="(sibling, index) in item.siblings"
+          ref="siblings"
           :key="`sibling_${index}`"
-          class="vue-family-col vue-family-col_sibling"
+          class="vue-family-col vue-family-col_siblings"
         >
           <!-- Sibling corner line -->
           <span
@@ -139,7 +141,8 @@
           />
           <!-- // Sibling corner line -->
           <VueFamilyBranch
-            :item="partner"
+            :item="sibling"
+            type="sibling"
             :gutters="gutters"
             :card-width="cardWidth"
             :card-height="cardHeight"
@@ -201,6 +204,7 @@ export default {
       type: Boolean,
       default: false
     },
+    type: String,
     gutters: {
       type: Number,
       default: 32
@@ -228,10 +232,56 @@ export default {
   },
   data () {
     return {
-      showControls: false
+      showControls: false,
+      siblingsConnector: {
+        width: 0
+      }
     }
   },
+  computed: {
+    siblingsConnectorWidth () {
+      return this.siblingsConnector.width
+    }
+  },
+  mounted () {
+    this.calcSiblingsConnector();
+  },
   methods: {
+    calcSiblingsConnector () {
+      const siblings = document.querySelectorAll(`[data-type=type_${this.item.id}]`);
+      if (siblings && siblings.length) {
+        let widths = [];
+        for (let i = 0; i < siblings.length; i++) {
+          const sibling = siblings[i];
+          const parent = findParentBySelector(sibling, '.vue-family-col_siblings');
+          if (parent) {
+            const rect = parent.getBoundingClientRect();
+            console.log(rect.left)
+            widths.push(rect.left - this.gutters * 2);
+          }
+        }
+        if (widths && widths.length) {
+          console.log(Math.max(widths))
+          this.$nextTick(() => {
+            this.siblingsConnector.width = Math.max(widths);
+          })
+        }
+      }
+      function collectionHas(a, b) { //helper function (see below)
+        for(let i = 0, len = a.length; i < len; i ++) {
+          if(a[i] == b) return true;
+        }
+        return false;
+      }
+      function findParentBySelector(elm, selector) {
+        let all = document.querySelectorAll(selector);
+        let cur = elm.parentNode;
+        while(cur && !collectionHas(all, cur)) { //keep going up until you find a match
+            cur = cur.parentNode; //go up
+        }
+        return cur; //will return null if not found
+      }
+    },
     calcParentConnector () {
       const item = this.item;
       const cardWidth = this.cardWidth;

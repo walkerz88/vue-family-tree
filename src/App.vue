@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       customCard: false,
-      rootPersonId: 2,
+      rootPersonId: 3,
       options: {
         gutters: 32,
         cardWidth: 256,
