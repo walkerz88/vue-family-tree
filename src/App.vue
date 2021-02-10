@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       customCard: false,
-      rootPersonId: 3,
+      rootPersonId: 2,
       options: {
         gutters: 32,
         cardWidth: 256,
@@ -78,13 +78,13 @@ export default {
           image: 'https://picsum.photos/id/400/200/300',
           name: 'Oleg Sister'
         },
-        {
+        /* {
           id: 6,
           pid: 1,
           ppid: 5,
           image: 'https://picsum.photos/id/400/200/300',
           name: 'Oleg Brother'
-        },
+        }, */
         {
           id: 4,
           partner_id: 2,

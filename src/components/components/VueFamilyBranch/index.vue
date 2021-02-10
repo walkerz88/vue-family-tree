@@ -41,16 +41,16 @@
     <div class="vue-family-row">
       <!-- Siblings connector -->
       <span
-        v-if="siblingsConnector.width"
-        class="vue-family-line siblings-connector"
+        v-if="item.siblings && Array.isArray(item.siblings) && item.siblings.length"
+        class="vue-family-line"
         :style="{
           top: `-${gutters + lineWidth}px`,
-          width: `${siblingsConnector.width}px`,
+          width: calcSiblingsConnector().width,
           height: `${lineWidth}px`,
           borderBottomWidth: `${lineWidth}px`,
           borderBottomStyle: 'solid',
           borderColor: lineColor,
-          left: `-${this.siblingsConnector.width - this.cardWidth / 2 + gutters}px`
+          left: `${this.cardWidth / 2 + gutters}px`
         }"
       />
       <!-- // Siblings connector -->
@@ -72,7 +72,6 @@
         />
         <!-- // Sibling corner line -->
         <VueFamilyCard
-          :data-type="type ? `type_${item.id}`: null"
           :id="item.id"
           :root-person-id="rootPersonId"
           :image="item.image"
@@ -142,7 +141,6 @@
           <!-- // Sibling corner line -->
           <VueFamilyBranch
             :item="sibling"
-            type="sibling"
             :gutters="gutters"
             :card-width="cardWidth"
             :card-height="cardHeight"
@@ -238,49 +236,40 @@ export default {
       }
     }
   },
-  computed: {
-    siblingsConnectorWidth () {
-      return this.siblingsConnector.width
-    }
-  },
-  mounted () {
-    this.calcSiblingsConnector();
-  },
   methods: {
     calcSiblingsConnector () {
-      const siblings = document.querySelectorAll(`[data-type=type_${this.item.id}]`);
-      if (siblings && siblings.length) {
-        let widths = [];
-        for (let i = 0; i < siblings.length; i++) {
-          const sibling = siblings[i];
-          const parent = findParentBySelector(sibling, '.vue-family-col_siblings');
-          if (parent) {
-            const rect = parent.getBoundingClientRect();
-            console.log(rect.left)
-            widths.push(rect.left - this.gutters * 2);
+      const cardWidth = this.cardWidth;
+      const siblings = this.item.siblings;
+      const partners = this.item.partners;
+      const gutters = this.gutters;
+      let width = cardWidth / 2;
+
+      if (siblings && Array.isArray(siblings) && siblings.length) {
+        if (partners && Array.isArray(partners) && partners.length) {
+          partners.forEach(() => {
+            width += cardWidth + gutters;
+          });
+        }
+        siblings.forEach((sibling, index) => {
+          if (index < siblings.length - 1) {
+            width += cardWidth + gutters;
+
+            let sibPartners = sibling.partners;
+
+            if (sibPartners && Array.isArray(sibPartners) && sibPartners.length) {
+              sibPartners.forEach(() => {
+                width += cardWidth + gutters;
+              });
+            }
+          } else {
+            width += cardWidth / 2 - gutters;
           }
-        }
-        if (widths && widths.length) {
-          console.log(Math.max(widths))
-          this.$nextTick(() => {
-            this.siblingsConnector.width = Math.max(widths);
-          })
-        }
+        });
       }
-      function collectionHas(a, b) { //helper function (see below)
-        for(let i = 0, len = a.length; i < len; i ++) {
-          if(a[i] == b) return true;
-        }
-        return false;
-      }
-      function findParentBySelector(elm, selector) {
-        let all = document.querySelectorAll(selector);
-        let cur = elm.parentNode;
-        while(cur && !collectionHas(all, cur)) { //keep going up until you find a match
-            cur = cur.parentNode; //go up
-        }
-        return cur; //will return null if not found
-      }
+
+      return {
+        width: `${width}px`
+      };
     },
     calcParentConnector () {
       const item = this.item;
