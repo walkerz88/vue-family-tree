@@ -61,23 +61,24 @@ export default {
         {
           id: 10,
           pid: 9,
+          ppid: 11,
           image: 'https://picsum.photos/id/1/200/300',
           name: 'John Brother'
         },
         {
           id: 2,
           pid: 1,
-          ppid: 5,
+          // ppid: 5,
           image: 'https://picsum.photos/id/100/200/300',
           name: 'Oleg Walkerz'
         },
-        {
+        /* {
           id: 3,
           pid: 1,
           ppid: 5,
           image: 'https://picsum.photos/id/400/200/300',
           name: 'Oleg Sister'
-        },
+        }, */
         /* {
           id: 6,
           pid: 1,
@@ -85,7 +86,7 @@ export default {
           image: 'https://picsum.photos/id/400/200/300',
           name: 'Oleg Brother'
         }, */
-        {
+        /* {
           id: 4,
           partner_id: 2,
           image: 'https://picsum.photos/id/500/200/300',
@@ -97,7 +98,7 @@ export default {
           partner_status: 'ex',
           image: 'https://picsum.photos/id/500/200/300',
           name: 'Oleg Ex'
-        },
+        }, */
         {
           id: 5,
           image: 'https://picsum.photos/id/600/200/300',

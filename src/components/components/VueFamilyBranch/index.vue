@@ -5,18 +5,18 @@
       class="vue-family-row"
       :style="{
         position: 'absolute',
-        top: calcParentsPosition().top,
-        left: calcParentsPosition().left
+        top: `${calcParentsPosition().top}px`,
+        left: `${calcParentsPosition().left}px`
       }"
     >
       <!-- Parents connector -->
       <div
         class="vue-family-line"
         :style="{
-          top: calcParentConnector().top,
-          left: calcParentConnector().left,
+          top: `${calcParentConnector().top}px`,
+          left: `${calcParentConnector().left}px`,
           width: `${lineWidth}px`,
-          height: calcParentConnector().height,
+          height: `${calcParentConnector().height}px`,
           borderLeftWidth: `${lineWidth}px`,
           borderLeftStyle: 'solid',
           borderColor: lineColor
@@ -45,7 +45,7 @@
         class="vue-family-line"
         :style="{
           top: `-${gutters + lineWidth}px`,
-          width: calcSiblingsConnector().width,
+          width: `${calcSiblingsConnector().width}px`,
           height: `${lineWidth}px`,
           borderBottomWidth: `${lineWidth}px`,
           borderBottomStyle: 'solid',
@@ -242,14 +242,17 @@ export default {
       const siblings = this.item.siblings;
       const partners = this.item.partners;
       const gutters = this.gutters;
-      let width = cardWidth / 2;
+      let width = 0;
 
       if (siblings && Array.isArray(siblings) && siblings.length) {
+        width = cardWidth / 2;
+
         if (partners && Array.isArray(partners) && partners.length) {
           partners.forEach(() => {
             width += cardWidth + gutters;
           });
         }
+
         siblings.forEach((sibling, index) => {
           if (index < siblings.length - 1) {
             width += cardWidth + gutters;
@@ -268,7 +271,7 @@ export default {
       }
 
       return {
-        width: `${width}px`
+        width
       };
     },
     calcParentConnector () {
@@ -282,20 +285,20 @@ export default {
       let height = 0;
 
       if (item.parents && item.parents.length > 1) {
-        top = `${cardHeight / 2}px`;
-        left = `${cardWidth + gutters / 2}px`;
+        top = cardHeight / 2;
+        left = cardWidth + gutters / 2;
         if (item.siblings && item.siblings.length) {
-          height = `${cardHeight / 2 + gutters}px`;
+          height = cardHeight / 2 + gutters;
         } else {
-          height = `${cardHeight / 2 + 2 * gutters}px`;
+          height = cardHeight / 2 + 2 * gutters;
         }
       } else {
-        top = `${cardHeight}px`;
-        left = `${cardWidth / 2}px`;
+        top = cardHeight;
+        left = cardWidth / 2;
         if (item.siblings && item.siblings.length) {
-          height = `${gutters}px`;
+          height = gutters;
         } else {
-          height = `${2 * gutters}px`;
+          height = 2 * gutters;
         }
       }
 
@@ -307,17 +310,19 @@ export default {
     },
     calcParentsPosition () {
       const item = this.item;
+      const parents = item.parents;
       const cardWidth = this.cardWidth;
       const cardHeight = this.cardHeight;
       const gutters = this.gutters;
-      const koef = item.parents.length - 1;
-      let top = `-${cardHeight + 2 * gutters}px`;
-      let left = 0;
+      let top = -cardHeight - 2 * gutters;
+      let left = this.calcSiblingsConnector().width;
 
-      if (item.siblings) {
-        left = `calc(50% - ${koef ? cardWidth * koef + gutters / 2 * koef : cardWidth / 2}px)`;
-      } else {
-        left = `-${cardWidth / 2 * koef + gutters / 2 * koef}px`;
+      if (left > 0) {
+        left = left / 2 + gutters;
+      }
+
+      if (parents.length > 1) {
+        left = left - cardWidth / 2 - gutters / 2;
       }
 
       return {
