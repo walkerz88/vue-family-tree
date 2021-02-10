@@ -23,20 +23,18 @@
         }"
       />
       <!-- // Parents connector -->
-      <div class="vue-family-col vue-family-col_parents">
-        <VueFamilyBranch
-          :item="item.parents[0]"
-          :gutters="gutters"
-          :card-width="cardWidth"
-          :card-height="cardHeight"
-          :line-color="lineColor"
-          :line-width="lineWidth"
-          :line-border-radius="lineBorderRadius"
-          :editable="editable"
-          :preventMouseEvents="preventMouseEvents"
-          @set-root-person="$emit('set-root-person', $event)"
-        />
-      </div>
+      <VueFamilyBranch
+        :item="item.parents[0]"
+        :gutters="gutters"
+        :card-width="cardWidth"
+        :card-height="cardHeight"
+        :line-color="lineColor"
+        :line-width="lineWidth"
+        :line-border-radius="lineBorderRadius"
+        :editable="editable"
+        :preventMouseEvents="preventMouseEvents"
+        @set-root-person="$emit('set-root-person', $event)"
+      />
     </div>
     <div class="vue-family-row">
       <!-- Siblings connector -->
@@ -87,7 +85,8 @@
         <div
           v-for="(partner, index) in item.partners"
           :key="`partner_${index}`"
-          class="vue-family-col vue-family-col_partner"
+          :style="{marginLeft: `${gutters}px`}"
+          class="vue-family-col"
         >
           <!-- Partners connector -->
           <span
@@ -121,7 +120,8 @@
           v-for="(sibling, index) in item.siblings"
           ref="siblings"
           :key="`sibling_${index}`"
-          class="vue-family-col vue-family-col_siblings"
+          :style="{marginLeft: `${gutters}px`}"
+          class="vue-family-col"
         >
           <!-- Sibling corner line -->
           <span
@@ -163,11 +163,9 @@
         left: `${(cardWidth + gutters) * item.childrens.length / 2 }px`
       }"
     >
-      <div class="vue-family-col vue-family-col_childrens"
-        v-for="(children, index) in item.childrens"
-        :key="index"
-      >
+      <template v-for="(children, index) in item.childrens">
         <VueFamilyBranch
+          :key="index"
           :item="children"
           :gutters="gutters"
           :card-width="cardWidth"
@@ -179,7 +177,7 @@
           :preventMouseEvents="preventMouseEvents"
           @set-root-person="$emit('set-root-person', $event)"
         />
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -348,18 +346,9 @@ export default {
 <style lang="scss" scoped>
 .vue-family-row {
   display: flex;
-  /* position: absolute;
-  top: 0;
-  left: 0; */
 }
 .vue-family-col {
   position: relative;
-  & + .vue-family-col {
-    margin-left: 32px;
-  }
-  /* position: absolute;
-  top: 0;
-  left: 0; */
 }
 .vue-family-line {
   position: absolute;
