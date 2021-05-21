@@ -228,29 +228,21 @@ export default {
           } 
         }
 
-        // 
-        // let childrens = [];
-        // 
+        // Childrens
+        let childrens = [];
 
-        /*if (!prevPerson || (person.pid && person.pid !== prevPerson.pid)) {
-          
-
-          parents = array.filter(item => item.id === person.pid || item.id === person.ppid);
-          partners = array.filter(item => item.partner_id === person.id);
-          childrens = array.filter(item => item.pid === person.id);
-        }*/
-
-        /* if (childrens && childrens.length) {
-          childrens = childrens.map(item => {
-            return {
-              ...item,
-              ...findRelations(item, 'childrens')
-            }
-          });
-          rel.childrens = childrens;
+        if (['childrens', 'siblings', 'partners', 'parents'].indexOf(type) === -1) {
+          childrens = array.filter(item => item.pid === person.id || item.ppid === person.id);
+          if (childrens && childrens.length) {
+            childrens = childrens.map(item => {
+              return {
+                ...item,
+                ...findRelations(item, 'childrens')
+              }
+            });
+            rel.childrens = childrens;
+          }
         }
-
-        */
 
         return rel;
       }

@@ -50,15 +50,25 @@ export default {
         },
         {
           id: 2,
-          pid: 7,
           image: 'https://picsum.photos/id/100/200/300',
           name: 'John Father'
         },
         {
           id: 3,
-          pid: 8,
           image: 'https://picsum.photos/id/200/200/300',
           name: 'John Mother'
+        },
+        {
+          id: 4,
+          pid: 1,
+          image: 'https://picsum.photos/id/400/200/300',
+          name: 'John Child 1'
+        },
+        {
+          id: 5,
+          pid: 1,
+          image: 'https://picsum.photos/id/400/200/300',
+          name: 'John Child 2'
         }
       ]
     }
