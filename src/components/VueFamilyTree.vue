@@ -17,64 +17,64 @@
       ...wrapperStyles,
     }"
   >
-    <VueFamilyTreeBranch
-      :tree="tree"
+    <div
+      ref="vueFamilyTree"
       :style="{
         position: enableDrag ? 'absolute' : null,
         top: `${position.y}px`,
-        left: `${position.x}px`
+        left: `${position.x}px`,
       }"
-      @card-click="cardClick"
     >
-      <template v-slot:card="{item}">
-        <slot
-          name="card"
-          :item="item"
-        />
-      </template>
-    </VueFamilyTreeBranch>
+      <VueFamilyTreeBranch :tree="tree" @card-click="cardClick">
+        <template v-slot:card="{ item }">
+          <slot name="card" :item="item" />
+        </template>
+      </VueFamilyTreeBranch>
+    </div>
   </div>
 </template>
 
 <script>
-import VueFamilyTreeBranch from './components/Branch.vue';
+import VueFamilyTreeBranch from "./components/Branch.vue";
 
 export default {
-  name: 'VueFamilyTree',
+  name: "VueFamilyTree",
   components: {
-    VueFamilyTreeBranch
+    VueFamilyTreeBranch,
   },
   props: {
     tree: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     enableDrag: {
       type: Boolean,
-      default: true
+      default: true,
     },
     wrapperStyles: {
       type: Object,
-      default () {
-        return this.enableDrag ? {
-          position: 'relative',
-          width: '100%',
-          height: '600px'
-        } : null
-      }
+      default() {
+        return this.enableDrag
+          ? {
+              position: "relative",
+              width: "100%",
+              height: "600px",
+            }
+          : null;
+      },
     },
     dragCursor: {
       type: String,
-      default: 'grabbing'
+      default: "grabbing",
     },
     mouseChangeDiff: {
       type: Number,
-      default: 2
-    }
+      default: 2,
+    },
   },
-  data () {
+  data() {
     return {
       dragAndDrop: {
         dragStarted: false,
@@ -82,55 +82,64 @@ export default {
         dragStartY: 0,
         diffX: 0,
         diffY: 0,
-        mouseCursor: 'default',
+        mouseCursor: "default",
       },
       preventMouseEvents: false,
       position: {
         x: 0,
-        y: 0
-      }
-    }
+        y: 0,
+      },
+    };
   },
   methods: {
-    mouseover (region) {
+    mouseover(region) {
       if (!this.preventMouseEvents) {
-        this.$emit('mouseover', region);
+        this.$emit("mouseover", region);
       }
     },
-    mouseleave (region) {
+    mouseleave(region) {
       if (!this.preventMouseEvents) {
-        this.$emit('mouseleave', region);
+        this.$emit("mouseleave", region);
       }
     },
-    cardClick (payload) {
+    cardClick(payload) {
       if (!this.preventMouseEvents) {
-        this.$emit('card-click', payload);
+        this.$emit("card-click", payload);
       }
     },
-    dragstart (event) {
+    dragstart(event) {
       if (this.enableDrag) {
         if (this.mobilePreventScroll) {
           const breakpoint = this.mobilePreventScroll.breakpoint || 1024;
-          const selector = this.mobilePreventScroll.selector || 'body';
+          const selector = this.mobilePreventScroll.selector || "body";
           const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
           if (mql.matches) {
             const $el = document.querySelector(selector);
             this.previousMobileOverflowType = $el.style.overflow;
-            $el.style.overflow = 'hidden';
+            $el.style.overflow = "hidden";
           }
         }
         this.dragAndDrop.dragStartX = event.pageX || event.touches[0].pageX;
         this.dragAndDrop.dragStartY = event.pageY || event.touches[0].pageY;
         this.dragAndDrop.dragStarted = true;
       }
-      this.$emit('dragstart', event);
+      this.$emit("dragstart", event);
     },
-    drag (event) {
+    drag(event) {
       if (this.enableDrag) {
         if (this.dragAndDrop.dragStarted) {
-          this.dragAndDrop.diffX = (event.pageX || event.touches[0].pageX) - this.dragAndDrop.dragStartX;
-          this.dragAndDrop.diffY = (event.pageY || event.touches[0].pageY) - this.dragAndDrop.dragStartY;
-          if (this.dragAndDrop.diffX > this.mouseChangeDiff || this.dragAndDrop.diffX < -this.mouseChangeDiff || this.dragAndDrop.diffY > this.mouseChangeDiff || this.dragAndDrop.diffX < -this.mouseChangeDiff) {
+          this.dragAndDrop.diffX =
+            (event.pageX || event.touches[0].pageX) -
+            this.dragAndDrop.dragStartX;
+          this.dragAndDrop.diffY =
+            (event.pageY || event.touches[0].pageY) -
+            this.dragAndDrop.dragStartY;
+          if (
+            this.dragAndDrop.diffX > this.mouseChangeDiff ||
+            this.dragAndDrop.diffX < -this.mouseChangeDiff ||
+            this.dragAndDrop.diffY > this.mouseChangeDiff ||
+            this.dragAndDrop.diffX < -this.mouseChangeDiff
+          ) {
             this.preventMouseEvents = true;
             this.dragAndDrop.mouseCursor = this.dragCursor;
           }
@@ -138,16 +147,16 @@ export default {
           this.position.y += this.dragAndDrop.diffY;
           this.dragAndDrop.dragStartX = event.pageX || event.touches[0].pageX;
           this.dragAndDrop.dragStartY = event.pageY || event.touches[0].pageY;
-          this.$emit('drag', event);
+          this.$emit("drag", event);
         }
       }
     },
-    dragend () {
+    dragend() {
       if (this.enableDrag) {
         this.dragAndDrop.dragStarted = false;
-        this.dragAndDrop.mouseCursor = 'default';
+        this.dragAndDrop.mouseCursor = "default";
         if (this.mobilePreventScroll) {
-          const selector = this.mobilePreventScroll.selector || 'body';
+          const selector = this.mobilePreventScroll.selector || "body";
           const $el = document.querySelector(selector);
           $el.style.overflow = this.previousMobileOverflowType;
         }
@@ -155,15 +164,15 @@ export default {
           this.preventMouseEvents = false;
         }, 150);
       }
-      this.$emit('dragend', event);
+      this.$emit("dragend", event);
     },
-    getTreeClientRect () {
-      return this.$refs.tree.getBoundingClientRect();
+    getTreeClientRect() {
+      return this.$refs.vueFamilyTree.getBoundingClientRect();
     },
-    getWrapperClientRect () {
+    getWrapperClientRect() {
       return this.$refs.wrapper.getBoundingClientRect();
     },
-    centerTree () {
+    centerTree() {
       return new Promise((resolve, reject) => {
         try {
           const wrapperCenterX = this.getWrapperClientRect().width / 2;
@@ -172,13 +181,13 @@ export default {
           const mapCenterY = this.getTreeClientRect().height / 2;
           this.position.x = wrapperCenterX - mapCenterX;
           this.position.y = wrapperCenterY - mapCenterY;
-          this.$emit('center-map');
+          this.$emit("center-map");
           resolve(true);
         } catch (e) {
-          reject (e);
+          reject(e);
         }
       });
     },
-  }
-}
+  },
+};
 </script>
