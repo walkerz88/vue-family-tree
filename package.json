@@ -3,7 +3,7 @@
   "homepage": "https://github.com/walkerz88/vue-family-tree",
   "private": false,
   "main": "./lib/vue-family-tree.common.js",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "scripts": {
     "serve": "vue-cli-service serve ./src/app.js",
     "serve-demo": "vue-cli-service serve",
