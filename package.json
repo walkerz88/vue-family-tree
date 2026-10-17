@@ -2,6 +2,8 @@
   "name": "vue-family-tree",
   "homepage": "https://github.com/walkerz88/vue-family-tree",
   "private": false,
+  "license": "MIT",
+  "author": "Anikin Alexander <mailwalkerz@yandex.ru>",
   "main": "./lib/vue-family-tree.common.js",
   "version": "0.1.8",
   "scripts": {
